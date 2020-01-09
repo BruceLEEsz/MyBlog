@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 评论实体-表 映射文件 -->
+<hibernate-mapping package="domain">
+	<class name="Comment" table="tb_comment">
+		<!-- 属性映射 -->
+		<id name="comment_id">
+			<generator class="native"></generator>
+		</id>
+		<property name="comment_content" column="comment_content"
+			type="text"></property>
+		<property name="add_time" column="add_time"></property>
+		<!-- 评论-用户 多对一映射 -->
+		<many-to-one name="user" column="user_id" class="User"></many-to-one>
+		<!-- 评论-博客 多对一映射 -->
+		<many-to-one name="blog" column="blog_id" class="Blog"></many-to-one>
+	</class>
+</hibernate-mapping>

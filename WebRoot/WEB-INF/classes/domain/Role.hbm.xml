@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 角色实体-表映射文件 -->
+<hibernate-mapping package="domain">
+	<class name="Role" table="tb_role">
+		<!-- 属性映射 -->
+		<id name="role_id">
+			<generator class="native"></generator>
+		</id>
+		<property name="role_name" column="role_name"></property>
+		<property name="role_authority" column="role_authority"></property>
+		<!-- cascade:save-update/delete/all -->
+		<!-- inverse:配置是否维护关系 -->
+		<!-- 角色-用户 一对多关系映射 -->
+		<set name="users" cascade="save-update" inverse="true">
+			<key column="role_id"></key>
+			<one-to-many class="User" />
+		</set>
+	</class>
+</hibernate-mapping>

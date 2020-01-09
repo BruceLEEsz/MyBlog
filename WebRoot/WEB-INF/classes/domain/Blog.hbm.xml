@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 博客 实体-表 映射文件 -->
+<hibernate-mapping package="domain">
+	<class name="Blog" table="tb_blog">
+		<!-- 属性映射 -->
+		<id name="blog_id">
+			<generator class="native"></generator>
+		</id>
+		<property name="title" column="title" not-null="true"></property>
+		<property name="blog_content" column="blog_content" type="text"></property>
+		<property name="add_time" column="add_time" not-null="true"></property>
+		<!-- 博客-用户 多对一关系映射 -->
+		<many-to-one name="user" column="user_id" class="User"></many-to-one>
+		<!-- 博客-评论 一对多映射 -->
+		<set name="comments" cascade="save-update" inverse="true">
+			<key column="blog_id"></key>
+			<one-to-many class="Comment" />
+		</set>
+	</class>
+</hibernate-mapping>

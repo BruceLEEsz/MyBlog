@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 用户实体-表 映射文件 -->
+<hibernate-mapping package="domain">
+	<class name="User" table="tb_user">
+		<!-- 属性映射 -->
+		<id name="user_id">
+			<generator class="native"></generator>
+		</id>
+		<property name="user_name" column="user_name" unique="true"
+			not-null="true"></property>
+		<property name="user_email" column="user_email" unique="true"
+			not-null="true"></property>
+		<property name="user_password" column="user_password"
+			not-null="true"></property>
+		<property name="confirmed" column="confirmed"></property>
+		<property name="user_nickname" column="user_nickname" unique="true"></property>
+		<property name="user_gender" column="user_gender"></property>
+		<property name="user_address" column="user_address"></property>
+		<property name="user_hobby" column="user_hobby"></property>
+		<property name="user_age" column="user_age"></property>
+		<property name="user_birthday" column="user_birthday"></property>
+		<property name="add_time" column="add_time"></property>
+		<many-to-one name="role" column="role_id" class="Role"></many-to-one>
+		<!-- 用户博客 一对多关系映射 -->
+		<set name="blogs" cascade="save-update" inverse="true">
+			<key column="user_id"></key>
+			<one-to-many class="Blog" />
+		</set>
+		<!-- 用户评论 一对多关系映射 -->
+		<set name="comments" cascade="save-update" inverse="true">
+			<key column="user_id"></key>
+			<one-to-many class="Comment" />
+		</set>
+		<!-- 用户-用户 好友 多对多关系映射 -->
+		<set name="friends" table="tb_friend">
+			<key column="user_id"></key>
+			<many-to-many class="User" column="friends_id"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>

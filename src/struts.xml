@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<constant name="struts.devMode" value="true"></constant>
+
+	<package name="web.action" namespace="/" extends="struts-default">
+
+		<!-- 自定义拦截器栈 -->
+		<interceptors>
+			<!-- 拦截器注册 -->
+			<interceptor name="logininter" class="web.interceptor.LoginInterceptor"></interceptor>
+			<interceptor name="processinter" class="web.interceptor.ProcessIntercepter"></interceptor>
+			<!-- 自定义拦截器栈 -->
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="logininter">
+					<!-- 设置不拦截的方法 -->
+					<param name="excludeMethods">login,register,findpw,resetpw</param>
+				</interceptor-ref>
+				<interceptor-ref name="processinter">
+					<!-- 设置需拦截的方法 -->
+					<param name="includeMethods">main,blog,post</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 设置默认拦截器栈引用 -->
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+
+		<!-- 全局结果集定义 -->
+		<global-results>
+			<result name="returnlogin" type="redirect">/login.jsp</result>
+			<result name="chainindex" type="chain">
+				<param name="actionName">index</param>
+				<param name="namespace">/</param>
+			</result>
+		</global-results>
+
+		<!-- 全局错误-结果映射 -->
+		<global-exception-mappings>
+			<exception-mapping result="registererror"
+				exception="Utils.Exception.RegisterException"></exception-mapping>
+			<exception-mapping result="loginerror"
+				exception="Utils.Exception.LoginException"></exception-mapping>
+			<exception-mapping result="modifypwerror"
+				exception="Utils.Exception.ModifyPwException"></exception-mapping>
+			<exception-mapping result="modifyinfoerror"
+				exception="Utils.Exception.ModifyInfoException"></exception-mapping>
+			<exception-mapping result="postblogerror"
+				exception="Utils.Exception.PostBlogException"></exception-mapping>
+		</global-exception-mappings>
+
+		<action name="authmanage_*" class="web.action.AuthorManageAction"
+			method="{1}">
+			<result name="tosetinfo">/setinfo.jsp</result>
+			<result name="tosetpw">/setpw.jsp</result>
+			<result name="login" type="redirect">/login.jsp</result>
+			<result name="tologin" type="dispatcher">/login.jsp</result>
+			
+			<result name="registererror">/register.jsp</result>
+			<result name="loginerror">/login.jsp</result>
+			<result name="modifypwerror" type="dispatcher">/setpw.jsp</result>
+			<result name="modifyinfoerror">/setinfo.jsp</result>
+
+			<result name="chainmain" type="chain">
+				<param name="actionName">main</param>
+				<param name="namespace">/</param>
+			</result>
+		</action>
+
+		<action name="blogmanage_*" class="web.action.BlogManageAction"
+			method="{1}">
+
+			<result name="toblog" type="redirect">/blog.jsp</result>
+			<result name="topostblog" type="dispatcher">/postblog.jsp</result>
+			<result name="postblogerror" type="dispatcher">/postblog.jsp</result>
+			<result name="chainmain" type="chain">
+				<param name="actionName">main</param>
+				<param name="namespace">/</param>
+			</result>
+			<result name="chainblog" type="chain">
+				<param name="actionName">blog</param>
+				<param name="namespace">/</param>
+				<param name="blog_id">${blog_id}</param>
+			</result>
+
+		</action>
+
+		<action name="commentmanage_*" class="web.action.CommentManageAction"
+			method="{1}">
+			<result name="chainblog" type="chain">
+				<param name="actionName">blog</param>
+				<param name="namespace">/</param>
+				<param name="blog_id">${blog_id}</param>
+			</result>
+		</action>
+
+		<action name="friendmanage_*" class="web.action.FriendManageAction"
+			method="{1}">
+			<result name="chainmain" type="chain">
+				<param name="actionName">main</param>
+				<param name="namespace">/</param>
+			</result>
+		</action>
+
+		<action name="*" class="web.action.ProcessManageAction" method="{1}">
+			<result name="toblog" type="dispatcher">/blog.jsp</result>
+			<result name="tomain" type="dispatcher">/infodisplay.jsp</result>
+			<result name="toindex" type="dispatcher">/index.jsp</result>
+		</action>
+
+	</package>
+</struts>    
