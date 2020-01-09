@@ -5,15 +5,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * ²©¿Í±íÊµÌåÀà
+ * åšå®¢è¡¨å®ä½“ç±»
  */
 public class Blog {
-	// ²©¿Í»ù±¾ÊôĞÔ
+	// åšå®¢åŸºæœ¬å±æ€§
 	private Long blog_id;
 	private String title;
 	private String blog_content;
 	private Date add_time;
-	// ¹ØÏµÎ¬»¤ÊôĞÔ
+	// å…³ç³»ç»´æŠ¤å±æ€§
 	private User user;
 	private Set<Comment> comments = new HashSet<Comment>();
 

@@ -1,7 +1,7 @@
 package Utils.Mail;
 
 /**
- * 邮件模板接口
+ * 閭欢妯＄増鎺ュ彛
  */
 public interface Mail {
 

@@ -17,33 +17,33 @@ import com.sun.mail.util.MailSSLSocketFactory;
 import Utils.Mail.Mail;
 
 /**
- * ÓÊ¼şÅäÖÃ¡¢·¢ËÍ¹¤¾ßÀà¡£
+ * é‚®ä»¶é…ç½®ã€å‘é€å·¥å…·ç±»ã€‚
  */
 public class MailUtil {
-	// ÓÊ¼ş·¢ËÍµØÖ·
+	// é‚®ä»¶å‘é€åœ°å€
 	private String from = "linapz@qq.com";
-	// ÓÊ¼ş·şÎñÆ÷µØÖ·
+	// é‚®ä»¶æœåŠ¡å™¨åœ°å€
 	private String host = "smtp.qq.com";
-	// ÓÊ¼ş½ÓÊÕµØÖ·
+	// é‚®ä»¶æ¥æ”¶åœ°å€
 	private String to = "";
-	// ²ÎÊı¶ÔÏó
+	// å‚æ•°å¯¹è±¡
 	private Properties properties = System.getProperties();
-	// »á»°¶ÔÏó
+	// ä¼šè¯å¯¹è±¡
 	private Session session = Session.getDefaultInstance(properties, new Authenticator() {
 		public PasswordAuthentication getPasswordAuthentication() {
 			return new PasswordAuthentication("linapz@qq.com", "syqzovqzrjclbjed");
 		}
 	});
-	// ÓÊ¼şÄ£°å½Ó¿Ú
+	// é‚®ä»¶æ¨¡æ¿æ¥å£
 	private Mail mail;
 
-	// ·¢ËÍ·½·¨
+	// å‘é€æ–¹æ³•
 	public void sendto(String to, Mail mail) {
-		// ÉèÖÃ½ÓÊÕµØÖ·
+		// è®¾ç½®æ¥æ”¶åœ°å€
 		this.to = to;
-		// ÉèÖÃ·¢ËÍÓÊ¼ş
+		// è®¾ç½®å‘é€é‚®ä»¶
 		this.mail = mail;
-		// ²ÎÊıÅäÖÃ
+		// å‚æ•°é…ç½®
 		properties.setProperty("mail.smtp.host", host);
 		properties.put("mail.smtp.auth", "true");
 		MailSSLSocketFactory sf;

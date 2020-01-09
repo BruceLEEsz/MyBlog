@@ -11,28 +11,28 @@ import dao.FriendManageDao;
 import domain.User;
 
 /**
- * ºÃÓÑÊı¾İ¹ÜÀíÊµÏÖÀà
+ * å¥½å‹æ•°æ®ç®¡ç†å®ç°ç±»
  */
 public class FriendManageDaoImpl implements FriendManageDao {
 
-	// ĞÂÔö·½·¨
+	// æ–°å¢æ–¹æ³•
 	@Override
 	public void add(User user) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// »ñÈ¡µ±Ç°²Ù×÷¶ÔÏó
+		// è·å–å½“å‰æ“ä½œå¯¹è±¡
 		User currentuser = (User) ActionContext.getContext().getSession().get("currentuser");
 		session.saveOrUpdate(currentuser);
-		// ĞÂÔöºÃÓÑ
+		// æ–°å¢å¥½å‹
 		currentuser.getFriends().add(user);
 	}
 
-	// ºÃÓÑÉ¾³ı·½·¨
+	// å¥½å‹åˆ é™¤æ–¹æ³•
 	@Override
 	public void delete(User user) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ĞÂ½¨sql²éÑ¯¶ÔÏó
+		// æ–°å»ºsqlæŸ¥è¯¢å¯¹è±¡
 		SQLQuery query = session
 				.createSQLQuery("select * from tb_user where user_nickname= '" + user.getUser_nickname() + "'");
 		query.addScalar("user_id", StandardBasicTypes.LONG);

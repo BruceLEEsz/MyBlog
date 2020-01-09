@@ -13,7 +13,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>MyBlog - 个人主页</title>
+<title>CS FORUM - 个人主页</title>
 
 <meta charset="utf-8">
 <meta name="viewport"
@@ -69,7 +69,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light fixed-top container"
 		id="mainNav">
 		<div class="container">
-			<a class="navbar-brand" href="<%=basePath%>index">MyBlog</a>
+			<a class="navbar-brand" href="<%=basePath%>index">CS FORUM</a>
 			<button class="navbar-toggler navbar-toggler-right" type="button"
 				data-toggle="collapse" data-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
@@ -105,7 +105,7 @@
 			<div class="row">
 				<div class="col-lg-8 col-md-10 mx-auto">
 					<div class="site-heading">
-						<h1>Welcome to MyBlog</h1>
+						<h1>Welcome to CS FORUM</h1>
 						<span class="subheading">Have a good Time!</span>
 					</div>
 				</div>
@@ -350,7 +350,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 col-md-10 mx-auto">
-						<p class="copyright text-muted">Copyright &copy; MyBlog 2019</p>
+						<p class="copyright text-muted">Copyright &copy; NJUST_CS_FORUM 2019</p>
+						
 					</div>
 				</div>
 			</div>

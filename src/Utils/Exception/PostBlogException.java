@@ -1,7 +1,7 @@
 package Utils.Exception;
 
 /**
- * ²©¿Í·¢±í¹ı³Ì´íÎóÀà
+ * åšå®¢å‘è¡¨è¿‡ç¨‹é”™è¯¯ç±»
  */
 public class PostBlogException extends RuntimeException {
 

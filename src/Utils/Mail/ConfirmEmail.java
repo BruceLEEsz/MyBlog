@@ -7,7 +7,7 @@ import org.apache.struts2.ServletActionContext;
 import domain.User;
 
 /**
- * ×¢²áÈ·ÈÏÓÊ¼şÊµÏÖÀà
+ * æ³¨å†Œç¡®è®¤é‚®ä»¶å®ç°ç±»
  */
 public class ConfirmEmail implements Mail {
 
@@ -17,9 +17,9 @@ public class ConfirmEmail implements Mail {
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path
 				+ "/";
 		String url = basePath + "authmanage_confirm?user_name=" + u.getUser_name() + "&modifypw=false";
-		SUBJECT.append("ÕË»§×¢²áÈ·ÈÏ");
-		CONTEXT.append("<h1>×ğ¾´µÄ<strong>" + u.getUser_name() + "</strong>:</h1><br/>");
-		CONTEXT.append("<p>»¶Ó­Äú¼ÓÈëMyBlog¡£Çë¾¡¿ìµã»÷<a href=\"" + url + "\">" + url + "</a>£¬ÊäÈë»ù±¾ĞÅÏ¢£¬Íê³É×¢²á¡£</p>");
+		SUBJECT.append("è´¦æˆ·æ³¨å†Œç¡®è®¤");
+		CONTEXT.append("<h1>å°Šæ•¬çš„<strong>" + u.getUser_name() + "</strong>:</h1><br/>");
+		CONTEXT.append("<p>æ¬¢è¿æ‚¨åŠ å…¥MyBlogã€‚è¯·å°½å¿«ç‚¹å‡»<a href=\"" + url + "\">" + url + "</a>ï¼Œè¾“å…¥åŸºæœ¬ä¿¡æ¯ï¼Œå®Œæˆæ³¨å†Œã€‚</p>");
 	}
 
 	@Override

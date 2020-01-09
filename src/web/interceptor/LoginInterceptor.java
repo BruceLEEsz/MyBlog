@@ -7,22 +7,22 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 
 /**
- * µÇÂ¼À¹½ØÆ÷¡£ ³ıµÇÂ¼¡¢×¢²á·½·¨Íâ£¬ÆäÓàÇëÇó¶¼ĞèÒªÏÈµÇÂ¼£¬·ñÔò×ªµ½µÇÂ¼½çÃæ¡£
+ * ç™»å½•æ‹¦æˆªå™¨ã€‚ é™¤ç™»å½•ã€æ³¨å†Œæ–¹æ³•å¤–ï¼Œå…¶ä½™è¯·æ±‚éƒ½éœ€è¦å…ˆç™»å½•ï¼Œå¦åˆ™è½¬åˆ°ç™»å½•ç•Œé¢ã€‚
  */
 public class LoginInterceptor extends MethodFilterInterceptor {
 
 	@Override
 	protected String doIntercept(ActionInvocation invocation) throws Exception {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Map<String, Object> session = ActionContext.getContext().getSession();
-		// È¡µÃµÇÂ¼±íÊ¾
+		// å–å¾—ç™»å½•è¡¨ç¤º
 		Object currentuser = session.get("currentuser");
-		// ÈôÎ´µÇÂ¼£¬×ªµ½µÇÂ¼½çÃæ
+		// è‹¥æœªç™»å½•ï¼Œè½¬åˆ°ç™»å½•ç•Œé¢
 		if (currentuser == null) {
-			ActionContext.getContext().put("message", "ÇëÏÈµÇÂ¼");
+			ActionContext.getContext().put("message", "è¯·å…ˆç™»å½•");
 			return "returnlogin";
 		}
-		// ·ñÔò£¬·ÅĞĞ
+		// å¦åˆ™ï¼Œæ”¾è¡Œ
 		else {
 			return invocation.invoke();
 		}

@@ -1,7 +1,7 @@
 package Utils.Exception;
 
 /**
- * ĞŞ¸ÄÃÜÂë¹ı³Ì´íÎóÀà
+ * ä¿®æ”¹å¯†ç è¿‡ç¨‹é”™è¯¯ç±»
  */
 public class ModifyPwException extends RuntimeException {
 

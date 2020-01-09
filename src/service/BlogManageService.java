@@ -2,7 +2,7 @@ package service;
 
 import domain.Blog;
 /**
- * 博客管理业务逻辑接口
+ * 鍗氬绠＄悊涓氬姟閫昏緫鎺ュ彛
  */
 public interface BlogManageService {
 

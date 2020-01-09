@@ -6,7 +6,7 @@ import java.util.Set;
 import domain.Comment;
 
 /**
- * 评论数据管理接口
+ * 璇勮鏁版嵁绠＄悊鎺ュ彛
  */
 public interface CommentManageDao {
 

@@ -3,7 +3,7 @@ package dao;
 import domain.User;
 
 /**
- * 好友数据管理接口
+ * 濂藉弸鏁版嵁绠＄悊鎺ュ彛
  */
 public interface FriendManageDao {
 	void add(User user);

@@ -9,16 +9,16 @@ import domain.User;
 import service.InfoCheck;
 
 /**
- * ÓÃ»§×¢²áĞÅÏ¢ÑéÖ¤ÊµÏÖÀà
+ * ç”¨æˆ·æ³¨å†Œä¿¡æ¯éªŒè¯å®ç°ç±»
  */
 public class InfoCheckImpl implements InfoCheck {
 
 	private UserManageDao umd = new UserManageDaoImpl();
 
-	// ÓÃ»§ÃûÑéÖ¤·½·¨
+	// ç”¨æˆ·åéªŒè¯æ–¹æ³•
 	@Override
 	public boolean checkname(String name) {
-		// ²éÑ¯ÓÃ»§ÃûÊÇ·ñ´æÔÚ
+		// æŸ¥è¯¢ç”¨æˆ·åæ˜¯å¦å­˜åœ¨
 		User u = umd.get_by_name(name);
 
 		if (u != null) {
@@ -28,7 +28,7 @@ public class InfoCheckImpl implements InfoCheck {
 
 	}
 
-	// ÓÊÏäÑéÖ¤·½·¨
+	// é‚®ç®±éªŒè¯æ–¹æ³•
 	@Override
 	public String checkmail(String mail) {
 
@@ -43,7 +43,7 @@ public class InfoCheckImpl implements InfoCheck {
 
 	}
 
-	// ÃÜÂëÑéÖ¤·½·¨
+	// å¯†ç éªŒè¯æ–¹æ³•
 	@Override
 	public boolean checkpassword(String pw, String pw2) {
 		if (!pw.equals(pw2))
@@ -53,7 +53,7 @@ public class InfoCheckImpl implements InfoCheck {
 
 	}
 
-	// ÑéÖ¤ÊÇ·ñ·ûºÏÓÊÏä¸ñÊ½
+	// éªŒè¯æ˜¯å¦ç¬¦åˆé‚®ç®±æ ¼å¼
 	public boolean ismail(String mail) {
 		String check = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 		Pattern regex = Pattern.compile(check);

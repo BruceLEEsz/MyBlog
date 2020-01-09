@@ -17,102 +17,102 @@ import domain.User;
 import service.BlogManageService;
 
 /**
- * ²©¿Í¹ÜÀíÒµÎñÂß¼­ÊµÏÖÀà
+ * åšå®¢ç®¡ç†ä¸šåŠ¡é€»è¾‘å®ç°ç±»
  */
 public class BlogManageServiceImpl implements BlogManageService {
 	
-	// ²©¿ÍÊı¾İ¹ÜÀíÀà¶ÔÏó
+	// åšå®¢æ•°æ®ç®¡ç†ç±»å¯¹è±¡
 	private BlogManageDao bmd = new BlogManageDaoImpl();
 
-	// ĞÂÔö²©¿Í·½·¨
+	// æ–°å¢åšå®¢æ–¹æ³•
 	@Override
 	public void post(Blog blog) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ¿ªÆôÊÂÎñ
+		// å¼€å¯äº‹åŠ¡
 		Transaction transaction = session.beginTransaction();
-		// ²©¿Í±êÌâ²»Îª¿Õ
+		// åšå®¢æ ‡é¢˜ä¸ä¸ºç©º
 		if (!blog.getTitle().equals("")) {
-			// ÉèÖÃĞÂÔöÊ±¼ä
+			// è®¾ç½®æ–°å¢æ—¶é—´
 			blog.setAdd_time(new Date());
-			// µ÷ÓÃDao²ã
+			// è°ƒç”¨Daoå±‚
 			bmd.add(blog);
 		}
-		// ²©¿Í±êÌâÎª¿Õ
+		// åšå®¢æ ‡é¢˜ä¸ºç©º
 		else {
-			// ÉèÖÃ²ÎÊı£¬Å×³ö´íÎóĞÅÏ¢
+			// è®¾ç½®å‚æ•°ï¼ŒæŠ›å‡ºé”™è¯¯ä¿¡æ¯
 			ActionContext.getContext().put("blog", blog);
 			ServletActionContext.getRequest().setAttribute("modify", true);
-			throw new PostBlogException("ÇëÊäÈë²©¿Í±êÌâ");
+			throw new PostBlogException("è¯·è¾“å…¥åšå®¢æ ‡é¢˜");
 		}
 
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 
 	}
 
-	// ÒÔblog_id»ñÈ¡blog¶ÔÏó
+	// ä»¥blog_idè·å–blogå¯¹è±¡
 	@Override
 	public void qurey_by_id(Long blog_id) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// µ÷ÓÃDao²ã£¬²éÑ¯blog¶ÔÏó
+		// è°ƒç”¨Daoå±‚ï¼ŒæŸ¥è¯¢blogå¯¹è±¡
 		Blog blog = bmd.get_by_id(blog_id);
-		// ·ÅÖÃ²ÎÊı
+		// æ”¾ç½®å‚æ•°
 		ActionContext.getContext().put("blog", blog);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}
 
-	// ĞŞ¸Ä²©¿Í·½·¨
+	// ä¿®æ”¹åšå®¢æ–¹æ³•
 	@Override
 	public void modify(Blog blog, Long blog_id) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// ²éÑ¯blog¶ÔÏó
+		// æŸ¥è¯¢blogå¯¹è±¡
 		Blog beforeblog = bmd.get_by_id(blog_id);
-		// ÖØÖÃblogÊôĞÔ
+		// é‡ç½®blogå±æ€§
 		beforeblog.setTitle(blog.getTitle());
 		beforeblog.setBlog_content(blog.getBlog_content());
 		beforeblog.setAdd_time(new Date());
-		// Ìá½»Dao²ãĞŞ¸Ä
+		// æäº¤Daoå±‚ä¿®æ”¹
 		bmd.alter(beforeblog);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 
 	}
 
-	// É¾³ı²©¿Í·½·¨
+	// åˆ é™¤åšå®¢æ–¹æ³•
 	@Override
 	public String delete(Long blog_id) {
 
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// µ÷ÓÃÓÃDao²ã£¬²éÑ¯ÒªÉ¾³ıµÄblog¶ÔÏó
+		// è°ƒç”¨ç”¨Daoå±‚ï¼ŒæŸ¥è¯¢è¦åˆ é™¤çš„blogå¯¹è±¡
 		Blog blog = bmd.get_by_id(blog_id);
 		User user = blog.getUser();
 		session.saveOrUpdate(user);
 		String user_nickname = user.getUser_nickname();
-		// µ÷ÓÃDao²ã£¬ÊµÏÖÉ¾³ıÂß¼­
+		// è°ƒç”¨Daoå±‚ï¼Œå®ç°åˆ é™¤é€»è¾‘
 		bmd.delete(blog);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 

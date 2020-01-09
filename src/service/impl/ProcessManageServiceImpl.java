@@ -24,56 +24,56 @@ import domain.User;
 import service.ProcessManageService;
 
 /**
- * Á÷³Ì¿ØÖÆÒµÎñÂß¼­ÊµÏÖÀà
+ * æµç¨‹æ§åˆ¶ä¸šåŠ¡é€»è¾‘å®ç°ç±»
  */
 public class ProcessManageServiceImpl implements ProcessManageService {
-	// ²©¿ÍÊı¾İ¹ÜÀíÀà¶ÔÏó
+	// åšå®¢æ•°æ®ç®¡ç†ç±»å¯¹è±¡
 	BlogManageDao bmd = new BlogManageDaoImpl();
-	// ÆÀÂÛÊı¾İ¹ÜÀíÀà¶ÔÏñ
+	// è¯„è®ºæ•°æ®ç®¡ç†ç±»å¯¹åƒ
 	CommentManageDao cmd = new CommentManageDaoImpl();
-	// ÓÃ»§Êı¾İ¹ÜÀíÀà¶ÔÏó
+	// ç”¨æˆ·æ•°æ®ç®¡ç†ç±»å¯¹è±¡
 	UserManageDao umd = new UserManageDaoImpl();
 
-	// ÏÔÊ¾²©¿ÍÕ¹Ê¾Ò³Ãæ
+	// æ˜¾ç¤ºåšå®¢å±•ç¤ºé¡µé¢
 	@Override
 	public void showblog(Long blog_id, Integer page) {
-		// ´´½¨·ÖÒ³Ò³ÃæĞÅÏ¢Àà¶ÔÏó
+		// åˆ›å»ºåˆ†é¡µé¡µé¢ä¿¡æ¯ç±»å¯¹è±¡
 		Page page_info = new Page();
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
 
-		// ´¦Àíµ±Ç°²Ù×÷¶ÔÏóĞÅÏ¢
-		// È¡µÃµ±Ç°²Ù×÷ÓÃ»§¶ÔÏó
+		// å¤„ç†å½“å‰æ“ä½œå¯¹è±¡ä¿¡æ¯
+		// å–å¾—å½“å‰æ“ä½œç”¨æˆ·å¯¹è±¡
 		User currentuser = (User) ActionContext.getContext().getSession().get("currentuser");
-		// ½«µ±Ç°ÓÃ»§×ª»»Îª³Ö¾Ã»¯¶ÔÏó
+		// å°†å½“å‰ç”¨æˆ·è½¬æ¢ä¸ºæŒä¹…åŒ–å¯¹è±¡
 		//session.clear();
 		//session.saveOrUpdate(currentuser);
-		// È¡µÃµ±Ç°ÓÃ»§È¨ÏŞ
+		// å–å¾—å½“å‰ç”¨æˆ·æƒé™
 		currentuser.getRole().getRole_authority();
 
-		// ´¦Àí²©¿ÍĞÅÏ¢
-		// È¡µÃÒªÕ¹Ê¾µÄ²©¿Í¶ÔÏó
+		// å¤„ç†åšå®¢ä¿¡æ¯
+		// å–å¾—è¦å±•ç¤ºçš„åšå®¢å¯¹è±¡
 		Blog blog = bmd.get_by_id(blog_id);
-		// »ñÈ¡²©¿Í×÷Õß¶ÔÏó¼°ĞÅÏ¢
+		// è·å–åšå®¢ä½œè€…å¯¹è±¡åŠä¿¡æ¯
 		String nickname = blog.getUser().getUser_nickname();
 		System.out.println(nickname);
 
-		// ´¦ÀíÆÀÂÛĞÅÏ¢
-		// È¡µÃÒªÕ¹Ê¾²©¿ÍÏÂÆÀÂÛÊı¾İ×ÜÌõÊı
+		// å¤„ç†è¯„è®ºä¿¡æ¯
+		// å–å¾—è¦å±•ç¤ºåšå®¢ä¸‹è¯„è®ºæ•°æ®æ€»æ¡æ•°
 		int allRows = cmd.getAllRowCount(blog_id);
-		// ¼ÆËã×ÜÒ³Êı
+		// è®¡ç®—æ€»é¡µæ•°
 		int totalPage = page_info.getTotalPages(5, allRows);
-		// µÃµ½µ±Ç°Ò³Âë
+		// å¾—åˆ°å½“å‰é¡µç 
 		int currentPage = page_info.getCurPage(page);
-		// ¼ÆËãÆ«ÒÆÁ¿
+		// è®¡ç®—åç§»é‡
 		int offset = page_info.getCurrentPageOffset(5, currentPage);
-		// ·â×°²ÎÊı
+		// å°è£…å‚æ•°
 		page_info.setAllRows(allRows);
 		page_info.setCurrentPage(currentPage);
 		page_info.setTotalpage(totalPage);
-		// µ÷ÓÃDao²ãÈ¡µÃÆÀÂÛ¶ÔÏó£¬¾ßÌåĞÅÏ¢
+		// è°ƒç”¨Daoå±‚å–å¾—è¯„è®ºå¯¹è±¡ï¼Œå…·ä½“ä¿¡æ¯
 		List<Comment> comments = cmd.get_by_page(blog_id, offset, 5);
 		Iterator<Comment> it = comments.iterator();
 		while (it.hasNext()) {
@@ -83,34 +83,34 @@ public class ProcessManageServiceImpl implements ProcessManageService {
 			System.out.println(user_nickname);
 		}
 
-		// ·â×°·µ»Ø²ÎÊı
+		// å°è£…è¿”å›å‚æ•°
 		ActionContext.getContext().put("page_info", page_info);
 		ActionContext.getContext().put("blog", blog);
 		ActionContext.getContext().put("comments", comments);
 		ServletActionContext.getRequest().setAttribute("comments", comments);
 
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}
 
-	// ÏÔÊ¾¸öÈËĞÅÏ¢Ò³Ãæ
+	// æ˜¾ç¤ºä¸ªäººä¿¡æ¯é¡µé¢
 	@Override
 	public void showmain(String user_nickname, Integer page) {
-		// ´´½¨·ÖÒ³Ò³ÃæĞÅÏ¢¶ÔÏó
+		// åˆ›å»ºåˆ†é¡µé¡µé¢ä¿¡æ¯å¯¹è±¡
 		Page page_info = new Page();
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
 
-		// ´¦Àíµ±Ç°²Ù×÷¶ÔÏó
-		// È¡µÃµ±Ç°²Ù×÷¶ÔÏó
+		// å¤„ç†å½“å‰æ“ä½œå¯¹è±¡
+		// å–å¾—å½“å‰æ“ä½œå¯¹è±¡
 		User currentuser = (User) ActionContext.getContext().getSession().get("currentuser");
 		User cuser = umd.get_by_nickname(currentuser.getUser_nickname());
-		// È¡µÃµ±Ç°²Ù×÷¶ÔÏóºÃÓÑ¼¯£¬´¦ÀíºÃÓÑĞÅÏ¢
+		// å–å¾—å½“å‰æ“ä½œå¯¹è±¡å¥½å‹é›†ï¼Œå¤„ç†å¥½å‹ä¿¡æ¯
 		Set<User> cu_friends = cuser.getFriends();
 		Iterator<User> cuit = cu_friends.iterator();
 		while (cuit.hasNext()) {
@@ -119,12 +119,12 @@ public class ProcessManageServiceImpl implements ProcessManageService {
 			System.out.println(u_nickname);
 		}
 
-		// ´¦ÀíÒªÏÔÊ¾ÓÃ»§¶ÔÏóĞÅÏ¢
-		// È¡µÃÒªÏÔÊ¾ÓÃ»§¶ÔÏó
+		// å¤„ç†è¦æ˜¾ç¤ºç”¨æˆ·å¯¹è±¡ä¿¡æ¯
+		// å–å¾—è¦æ˜¾ç¤ºç”¨æˆ·å¯¹è±¡
 		User user = umd.get_by_nickname(user_nickname);
-		// ´¦ÀíÈ¨ÏŞĞÅÏ¢
+		// å¤„ç†æƒé™ä¿¡æ¯
 		user.getRole().getRole_authority();
-		// È¡µÃÓÃ»§ºÃÓÑ¼¯£¬´¦ÀíºÃÓÑĞÅÏ¢
+		// å–å¾—ç”¨æˆ·å¥½å‹é›†ï¼Œå¤„ç†å¥½å‹ä¿¡æ¯
 		Set<User> friends = user.getFriends();
 		Iterator<User> uit = friends.iterator();
 		while (uit.hasNext()) {
@@ -133,49 +133,49 @@ public class ProcessManageServiceImpl implements ProcessManageService {
 			System.out.println(u_nickname);
 		}
 
-		// ´¦ÀíÒªÏÔÊ¾ÓÃ»§µÄ²©¿ÍĞÅÏ¢
-		// ¼ÆËã²©¿ÍÊı¾İ×ÜÌõÊı
+		// å¤„ç†è¦æ˜¾ç¤ºç”¨æˆ·çš„åšå®¢ä¿¡æ¯
+		// è®¡ç®—åšå®¢æ•°æ®æ€»æ¡æ•°
 		int allRows = bmd.getAllRowCount(user_nickname);
-		// ¼ÆËã×ÜÒ³Êı
+		// è®¡ç®—æ€»é¡µæ•°
 		int totalPage = page_info.getTotalPages(4, allRows);
-		// µÃµ½µ±Ç°Ò³Âë
+		// å¾—åˆ°å½“å‰é¡µç 
 		int currentPage = page_info.getCurPage(page);
-		/// ¼ÆËãÆ«ÒÆÁ¿
+		/// è®¡ç®—åç§»é‡
 		int offset = page_info.getCurrentPageOffset(4, currentPage);
-		// ·â×°²ÎÊı
+		// å°è£…å‚æ•°
 		page_info.setAllRows(allRows);
 		page_info.setCurrentPage(currentPage);
 		page_info.setTotalpage(totalPage);
-		// È¡µÃ²©¿ÍÊı¾İ ¼¯
+		// å–å¾—åšå®¢æ•°æ® é›†
 		List<Blog> blogs = bmd.query_by_page(user_nickname, offset, 4);
-		// ´¦Àí²©¿Í¶ÔÏó
+		// å¤„ç†åšå®¢å¯¹è±¡
 		Iterator<Blog> bit = blogs.iterator();
 		while (bit.hasNext()) {
 			Blog b = bit.next();
 			System.out.println(b);
 		}
 
-		// ·â×°·µ»Ø²ÎÊı
+		// å°è£…è¿”å›å‚æ•°
 		ActionContext.getContext().put("user", user);
 		ActionContext.getContext().put("page_info", page_info);
 		ServletActionContext.getRequest().setAttribute("blogs", blogs);
 		ServletActionContext.getRequest().setAttribute("friends", friends);
 		ServletActionContext.getRequest().setAttribute("cufriends", cu_friends);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}
 
-	// ÏÔÊ¾Ö÷Ò³Ãæ
+	// æ˜¾ç¤ºä¸»é¡µé¢
 	@Override
 	public void showindex() {
-		// È¡µÃsession¶ÔÏó
+		// å–å¾—sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// µ÷ÓÃDao²ã£¬È¡µÃ²©¿ÍÊı¾İ¼¯£¬´¦Àí²©¿ÍÊı¾İ
+		// è°ƒç”¨Daoå±‚ï¼Œå–å¾—åšå®¢æ•°æ®é›†ï¼Œå¤„ç†åšå®¢æ•°æ®
 		List<Blog> blogs = bmd.query();
 		Iterator<Blog> it = blogs.iterator();
 		while (it.hasNext()) {
@@ -184,14 +184,15 @@ public class ProcessManageServiceImpl implements ProcessManageService {
 			String user_nickname = u.getUser_name();
 			System.out.println(user_nickname);
 		}
-		// ·â×°·µ»Ø²ÎÊı
+		// å°è£…è¿”å›å‚æ•°
 		ServletActionContext.getRequest().setAttribute("blogs", blogs);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 
 	}
 
 }
+

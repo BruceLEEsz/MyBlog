@@ -7,7 +7,7 @@ import org.apache.struts2.ServletActionContext;
 import domain.User;
 
 /**
- * ĞŞ¸ÄÃÜÂëÈ·ÈÏÓÊ¼şÊµÏÖÀà
+ * ä¿®æ”¹å¯†ç ç¡®è®¤é‚®ä»¶å®ç°ç±»
  */
 public class ModifyPwEmail implements Mail {
 
@@ -17,9 +17,9 @@ public class ModifyPwEmail implements Mail {
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path
 				+ "/";
 		String url = basePath + "authmanage_confirm?user_name=" + u.getUser_name() + "&modifypw=true";
-		SUBJECT.append("ÕË»§ÃÜÂëĞŞ¸ÄÈ·ÈÏ");
-		CONTEXT.append("<h1>×ğ¾´µÄ<strong>" + u.getUser_name() + "</strong>:</h1><br/>");
-		CONTEXT.append("<p>ÄúÒÑÇëÇóĞŞ¸ÄÃÜÂë¡£Çëµã»÷<a href=\"" + url + "\">" + url + "</a>£¬½øÈëĞŞ¸ÄÒ³Ãæ¡£</p>");
+		SUBJECT.append("è´¦æˆ·å¯†ç ä¿®æ”¹ç¡®è®¤");
+		CONTEXT.append("<h1>å°Šæ•¬çš„<strong>" + u.getUser_name() + "</strong>:</h1><br/>");
+		CONTEXT.append("<p>æ‚¨å·²è¯·æ±‚ä¿®æ”¹å¯†ç ã€‚è¯·ç‚¹å‡»<a href=\"" + url + "\">" + url + "</a>ï¼Œè¿›å…¥ä¿®æ”¹é¡µé¢ã€‚</p>");
 	}
 
 	@Override

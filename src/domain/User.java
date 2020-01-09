@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * ÓÃ»§±íÊµÌåÀà
+ * ç”¨æˆ·è¡¨å®ä½“ç±»
  */
 public class User {
-	// ×¢²á»ù±¾ÊôĞÔ
+	// æ³¨å†ŒåŸºæœ¬å±æ€§
 	private Long user_id;
 	private String user_name;
 	private String user_loginname;
@@ -16,12 +16,12 @@ public class User {
 	private String user_password;
 	private String user_password2;
 	private Boolean confirmed;
-	// ¹ØÏµÎ¬»¤ÊôĞÔ
+	// å…³ç³»ç»´æŠ¤å±æ€§
 	private Role role;
 	private Set<Blog> blogs = new HashSet<Blog>();
 	private Set<Comment> comments = new HashSet<Comment>();
 	private Set<User> friends = new HashSet<User>();
-	// ¸öÈË»ù±¾ĞÅÏ¢ÊôĞÔ
+	// ä¸ªäººåŸºæœ¬ä¿¡æ¯å±æ€§
 	private String user_nickname;
 	private String user_gender;
 	private String user_address;
@@ -180,3 +180,4 @@ public class User {
 	}
 
 }
+

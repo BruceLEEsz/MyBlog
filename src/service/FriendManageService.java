@@ -1,6 +1,6 @@
 package service;
 /**
- * 好友管理业务逻辑接口
+ * 濂藉弸绠＄悊涓氬姟閫昏緫鎺ュ彛
  */
 public interface FriendManageService {
 	

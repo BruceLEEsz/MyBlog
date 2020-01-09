@@ -3,7 +3,7 @@ package service;
 import domain.Comment;
 
 /**
- *评论管理业务逻辑接口 
+ *璇勮绠＄悊涓氬姟閫昏緫鎺ュ彛 
  */
 public interface CommentManageService {
 	void post(Comment comment, Long blog_id);

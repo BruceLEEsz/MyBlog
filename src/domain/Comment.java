@@ -3,15 +3,15 @@ package domain;
 import java.util.Date;
 
 /**
- * ÆÀÂÛ±íÊµÌåÀà
+ * è¯„è®ºè¡¨å®ä½“ç±»
  */
 
 public class Comment {
-	// ÆÀÂÛ»ù±¾ÊôĞÔ
+	// è¯„è®ºåŸºæœ¬å±æ€§
 	private Long comment_id;
 	private String comment_content;
 	private Date add_time;
-	// ¹ØÏµÎ¬»¤ÊôĞÔ
+	// å…³ç³»ç»´æŠ¤å±æ€§
 	private Blog blog;
 	private User user;
 

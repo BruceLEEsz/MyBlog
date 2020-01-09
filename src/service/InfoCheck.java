@@ -1,6 +1,6 @@
 package service;
 /**
- * 用户注册信息验证接口
+ * 鐢ㄦ埛娉ㄥ唽淇℃伅楠岃瘉鎺ュ彛
  */
 public interface InfoCheck {
 	boolean checkname(String s);

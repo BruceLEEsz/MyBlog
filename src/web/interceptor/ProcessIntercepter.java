@@ -9,22 +9,22 @@ import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 import domain.User;
 
 /**
- * Á÷³Ì¿ØÖÆÀ¹½ØÆ÷¡£ µÇÂ¼ºó£¬Ö÷Òª¹¦ÄÜµÄÊ¹ÓÃĞèÒªÕË»§×´Ì¬Îª¡°È·ÈÏ¡±¡£
+ * æµç¨‹æ§åˆ¶æ‹¦æˆªå™¨ã€‚ ç™»å½•åï¼Œä¸»è¦åŠŸèƒ½çš„ä½¿ç”¨éœ€è¦è´¦æˆ·çŠ¶æ€ä¸ºâ€œç¡®è®¤â€ã€‚
  */
 public class ProcessIntercepter extends MethodFilterInterceptor {
 
 	@Override
 	protected String doIntercept(ActionInvocation invocation) throws Exception {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Map<String, Object> session = ActionContext.getContext().getSession();
-		// È¡µÃµ±Ç°ÓÃ»§
+		// å–å¾—å½“å‰ç”¨æˆ·
 		User currentuser = (User) session.get("currentuser");
-		// ÈôÕË»§Î´È·ÈÏ£¬×ªµ½Ê×Ò³²¢¸øÓèÌáÊ¾ĞÅÏ¢
+		// è‹¥è´¦æˆ·æœªç¡®è®¤ï¼Œè½¬åˆ°é¦–é¡µå¹¶ç»™äºˆæç¤ºä¿¡æ¯
 		if (!currentuser.getConfirmed()) {
-			ActionContext.getContext().put("message", "ÕË»§Î´È·ÈÏ!");
+			ActionContext.getContext().put("message", "è´¦æˆ·æœªç¡®è®¤!");
 			return "chainindex";
 		}
-		// ·ñÔò£¬·ÅĞĞ
+		// å¦åˆ™ï¼Œæ”¾è¡Œ
 		else {
 			return invocation.invoke();
 		}

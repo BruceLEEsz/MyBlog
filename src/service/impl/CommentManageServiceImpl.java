@@ -12,43 +12,43 @@ import domain.Comment;
 import service.CommentManageService;
 
 /**
- * ÆÀÂÛ¹ÜÀíÒµÎñÂß¼­ÊµÏÖÀà
+ * è¯„è®ºç®¡ç†ä¸šåŠ¡é€»è¾‘å®ç°ç±»
  */
 public class CommentManageServiceImpl implements CommentManageService {
 	
-	// ÆÀÂÛÊı¾İ¹ÜÀíÀà¶ÔÏó
+	// è¯„è®ºæ•°æ®ç®¡ç†ç±»å¯¹è±¡
 	private CommentManageDao cmd = new CommentManageDaoImpl();
 
-	// ÆÀÂÛ·¢±í·½·¨
+	// è¯„è®ºå‘è¡¨æ–¹æ³•
 	@Override
 	public void post(Comment comment, Long blog_id) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// ÉèÖÃÆÀÂÛ·¢±íÊ±¼ä
+		// è®¾ç½®è¯„è®ºå‘è¡¨æ—¶é—´
 		comment.setAdd_time(new Date());
-		// Ìá½»Dao
+		// æäº¤Dao
 		cmd.add(comment, blog_id);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}
 
-	// ÆÀÂÛÉ¾³ı·½·¨
+	// è¯„è®ºåˆ é™¤æ–¹æ³•
 	@Override
 	public void delete(Comment comment, Long blog_id) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// µ÷ÓÃdao²ã
+		// è°ƒç”¨daoå±‚
 		cmd.del(comment, blog_id);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 

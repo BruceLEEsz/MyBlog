@@ -7,7 +7,7 @@ import org.apache.struts2.ServletActionContext;
 import domain.User;
 
 /**
- * ÖØÖÃÃÜÂëÈ·ÈÏÓÊ¼şÊµÏÖÀà
+ * é‡ç½®å¯†ç ç¡®è®¤é‚®ä»¶å®ç°ç±»
  */
 public class ResetPwEmail implements Mail {
 	public ResetPwEmail(User u) {
@@ -16,9 +16,9 @@ public class ResetPwEmail implements Mail {
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path
 				+ "/";
 		String url = basePath + "setpw.jsp?resetpw=true&email=" + u.getUser_email();
-		SUBJECT.append("ÕË»§ÃÜÂëÖØÖÃÈ·ÈÏ");
-		CONTEXT.append("<h1>×ğ¾´µÄ<strong>" + u.getUser_name() + "</strong>:</h1><br/>");
-		CONTEXT.append("<p>ÄúÒÑÇëÇóÖØÖÃÃÜÂë¡£Çëµã»÷<a href=\"" + url + "\">" + url + "</a>£¬½øÈëĞŞ¸ÄÒ³Ãæ¡£</p>");
+		SUBJECT.append("è´¦æˆ·å¯†ç é‡ç½®ç¡®è®¤");
+		CONTEXT.append("<h1>å°Šæ•¬çš„<strong>" + u.getUser_name() + "</strong>:</h1><br/>");
+		CONTEXT.append("<p>æ‚¨å·²è¯·æ±‚é‡ç½®å¯†ç ã€‚è¯·ç‚¹å‡»<a href=\"" + url + "\">" + url + "</a>ï¼Œè¿›å…¥ä¿®æ”¹é¡µé¢ã€‚</p>");
 	}
 
 	@Override

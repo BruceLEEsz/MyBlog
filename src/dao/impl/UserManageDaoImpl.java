@@ -8,75 +8,75 @@ import dao.UserManageDao;
 import domain.User;
 
 /**
- * ÓÃ»§Êı¾İ¹ÜÀíÊµÏÖÀà
+ * ç”¨æˆ·æ•°æ®ç®¡ç†å®ç°ç±»
  */
 public class UserManageDaoImpl implements UserManageDao {
 
-	// ĞÂÔöÓÃ»§·½·¨
+	// æ–°å¢ç”¨æˆ·æ–¹æ³•
 	@Override
 	public void add(User user) {
 
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ĞÂÔöÓÃ»§¶ÔÏó
+		// æ–°å¢ç”¨æˆ·å¯¹è±¡
 		session.save(user);
 
 	}
 
-	// ÒÔÓÃ»§Ãû²éÑ¯ÓÃ»§·½·¨
+	// ä»¥ç”¨æˆ·åæŸ¥è¯¢ç”¨æˆ·æ–¹æ³•
 	@Override
 	public User get_by_name(String user_name) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// hqlÓï¾ä
+		// hqlè¯­å¥
 		String hql = "from domain.User where user_name = ?";
-		// ĞÂ½¨²éÑ¯¶ÔÏó
+		// æ–°å»ºæŸ¥è¯¢å¯¹è±¡
 		Query query = session.createQuery(hql);
-		// ²ÎÊıÉèÖÃ
+		// å‚æ•°è®¾ç½®
 		query.setParameter(0, user_name);
-		// »ñÈ¡²éÑ¯½á¹û
+		// è·å–æŸ¥è¯¢ç»“æœ
 		User u = (User) query.uniqueResult();
 		return u;
 	}
 
-	// ÒÔÓÊÏä²éÑ¯ÓÃ»§·½·¨
+	// ä»¥é‚®ç®±æŸ¥è¯¢ç”¨æˆ·æ–¹æ³•
 	@Override
 	public User get_by_eamil(String user_email) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// hqlÓï¾ä
+		// hqlè¯­å¥
 		String hql = "from domain.User where user_email = ?";
-		// ĞÂ½¨²éÑ¯¶ÔÏó
+		// æ–°å»ºæŸ¥è¯¢å¯¹è±¡
 		Query query = session.createQuery(hql);
-		// ²ÎÊıÉèÖÃ
+		// å‚æ•°è®¾ç½®
 		query.setParameter(0, user_email);
-		// »ñÈ¡²éÑ¯½á¹û
+		// è·å–æŸ¥è¯¢ç»“æœ
 		User u = (User) query.uniqueResult();
 		return u;
 	}
 
-	// ÓÃ»§ĞŞ¸Ä
+	// ç”¨æˆ·ä¿®æ”¹
 	@Override
 	public void modify(User user) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÓÃ»§ĞŞ¸Ä
+		// ç”¨æˆ·ä¿®æ”¹
 		session.update(user);
 
 	}
 
-	// ²åĞğÖ¸¶¨user_nicknameµÄÓÃ»§
+	// æ’å™æŒ‡å®šuser_nicknameçš„ç”¨æˆ·
 	@Override
 	public User get_by_nickname(String user_nickname) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// hqlÓï¾ä
+		// hqlè¯­å¥
 		String hql = "from domain.User where user_nickname = ?";
-		// ĞÂ½¨²éÑ¯¶ÔÏó
+		// æ–°å»ºæŸ¥è¯¢å¯¹è±¡
 		Query query = session.createQuery(hql);
-		// ²ÎÊıÉèÖÃ
+		// å‚æ•°è®¾ç½®
 		query.setParameter(0, user_nickname);
-		// »ñÈ¡²éÑ¯½á¹û
+		// è·å–æŸ¥è¯¢ç»“æœ
 		User u = (User) query.uniqueResult();
 
 		return u;

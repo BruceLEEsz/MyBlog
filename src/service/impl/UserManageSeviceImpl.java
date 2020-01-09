@@ -26,41 +26,41 @@ import service.InfoCheck;
 import service.UserManageService;
 
 /**
- * ÓÃ»§¹ÜÀíÒµÎñÂß¼­ÊµÏÖÀà
+ * ç”¨æˆ·ç®¡ç†ä¸šåŠ¡é€»è¾‘å®ç°ç±»
  */
 public class UserManageSeviceImpl implements UserManageService {
-	// ÓÃ»§Ïà¹ØĞÅÏ¢¼ì²éÊµÏÖÀà¶ÔÏó
+	// ç”¨æˆ·ç›¸å…³ä¿¡æ¯æ£€æŸ¥å®ç°ç±»å¯¹è±¡
 	InfoCheck ic = new InfoCheckImpl();
-	// ÓÃ»§Êı¾İ¹ÜÀíÀà¶ÔÏó
+	// ç”¨æˆ·æ•°æ®ç®¡ç†ç±»å¯¹è±¡
 	UserManageDao umd = new UserManageDaoImpl();
-	// ½ÇÉ«Êı¾İ¹ÜÀíÀà¶ÔÏó
+	// è§’è‰²æ•°æ®ç®¡ç†ç±»å¯¹è±¡
 	RoleManageDao rmd = new RoleManageDaoImpl();
 
-	// ÊµÏÖ×¢²á¹¦ÄÜ
+	// å®ç°æ³¨å†ŒåŠŸèƒ½
 	@Override
 	public User register(User user) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// ¼ì²éÓÃ»§ÃûÊÇ·ñ±»×¢²á
+		// æ£€æŸ¥ç”¨æˆ·åæ˜¯å¦è¢«æ³¨å†Œ
 		if (!ic.checkname(user.getUser_name())) {
-			throw new RegisterException("ÓÃ»§ÃûÒÑ±»×¢²á");
+			throw new RegisterException("ç”¨æˆ·åå·²è¢«æ³¨å†Œ");
 		}
-		// ¼ì²éÓÊÏäÊÇ·ñ±»×¢²á£¬ÓÊÏä¸ñÊ½ÊÇ·ñÕıÈ·
+		// æ£€æŸ¥é‚®ç®±æ˜¯å¦è¢«æ³¨å†Œï¼Œé‚®ç®±æ ¼å¼æ˜¯å¦æ­£ç¡®
 		switch (ic.checkmail(user.getUser_email())) {
 		case "1":
-			throw new RegisterException("ÓÊÏäÒÑ±»×¢²á");
+			throw new RegisterException("é‚®ç®±å·²è¢«æ³¨å†Œ");
 		case "2":
-			throw new RegisterException("ÓÊÏä¸ñÊ½²»ÕıÈ·");
+			throw new RegisterException("é‚®ç®±æ ¼å¼ä¸æ­£ç¡®");
 		default:
 			break;
 		}
-		// ¼ì²éÁ½´ÎÃÜÂëÊäÈëÊÇ·ñÒ»ÖÂ
+		// æ£€æŸ¥ä¸¤æ¬¡å¯†ç è¾“å…¥æ˜¯å¦ä¸€è‡´
 		if (!ic.checkpassword(user.getUser_password(), user.getUser_password2())) {
-			throw new RegisterException("Á½´ÎÃÜÂëÊäÈë²»Ò»ÖÂ");
+			throw new RegisterException("ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ä¸€è‡´");
 		}
-		// ÑéÖ¤Í¨¹ı£¬µ÷ÓÃÊı¾İ²ã£¬ĞÂÔö¿Í»§¡£
+		// éªŒè¯é€šè¿‡ï¼Œè°ƒç”¨æ•°æ®å±‚ï¼Œæ–°å¢å®¢æˆ·ã€‚
 		user.setConfirmed(false);
 		user.setAdd_time(new Date());
 		umd.add(user);
@@ -68,11 +68,11 @@ public class UserManageSeviceImpl implements UserManageService {
 		r_user.getUsers().add(user);
 		user.setRole(r_user);
 		rmd.add_user(r_user);
-		// ÏòÓÃ»§ÓÊÏä·¢ËÍÈ·ÈÏÓÊ¼ş
+		// å‘ç”¨æˆ·é‚®ç®±å‘é€ç¡®è®¤é‚®ä»¶
 		new MailUtil().sendto(user.getUser_email(), new ConfirmEmail(user));
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 
@@ -80,85 +80,85 @@ public class UserManageSeviceImpl implements UserManageService {
 
 	}
 
-	// ÊµÏÖµÇÂ¼¹¦ÄÜ
+	// å®ç°ç™»å½•åŠŸèƒ½
 	@Override
 	public User login(User user) {
 		User u = null;
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// ¼ì²éµÇÂ¼ÃûÊÇ·ñÎªÓÊÏä
+		// æ£€æŸ¥ç™»å½•åæ˜¯å¦ä¸ºé‚®ç®±
 		if (ic.ismail(user.getUser_loginname())) {
 			u = umd.get_by_eamil(user.getUser_loginname());
-			// ¼ì²éÓÊÏäÊÇ·ñ×¢²á
+			// æ£€æŸ¥é‚®ç®±æ˜¯å¦æ³¨å†Œ
 			if (u == null)
-				throw new LoginException("ÓÊÏä²»´æÔÚ");
-			// ¼ì²éÃÜÂëÊÇ·ñÆ¥Åä
+				throw new LoginException("é‚®ç®±ä¸å­˜åœ¨");
+			// æ£€æŸ¥å¯†ç æ˜¯å¦åŒ¹é…
 			else if (u != null && !u.getUser_password().equals(user.getUser_password()))
-				throw new LoginException("ÃÜÂë´íÎó");
+				throw new LoginException("å¯†ç é”™è¯¯");
 		} else {
-			// ¼ì²éÓÃ»§ÃûÊÇ·ñ×¢²á
+			// æ£€æŸ¥ç”¨æˆ·åæ˜¯å¦æ³¨å†Œ
 			if (ic.checkname(user.getUser_loginname()))
-				throw new LoginException("ÓÃ»§Ãû²»´æÔÚ");
+				throw new LoginException("ç”¨æˆ·åä¸å­˜åœ¨");
 			else {
 				u = umd.get_by_name(user.getUser_loginname());
-				// ¼ì²éÃÜÂëÊÇ·ñÆ¥Åä
+				// æ£€æŸ¥å¯†ç æ˜¯å¦åŒ¹é…
 				if (!u.getUser_password().equals(user.getUser_password()))
-					throw new LoginException("ÃÜÂë´íÎó");
+					throw new LoginException("å¯†ç é”™è¯¯");
 			}
 		}
-		// µÇÂ¼³É¹¦£¬È¡µÃÓÃ»§È¨ÏŞÊı¾İ
+		// ç™»å½•æˆåŠŸï¼Œå–å¾—ç”¨æˆ·æƒé™æ•°æ®
 		u.getRole().getRole_authority();
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 
 		return u;
 	}
 
-	// ×¢²áÑéÖ¤¹¦ÄÜ
+	// æ³¨å†ŒéªŒè¯åŠŸèƒ½
 	@Override
 	public void confirm(User u, String user_name) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// Ö´ĞĞÑéÖ¤
+		// æ‰§è¡ŒéªŒè¯
 		if (u != null && u.getUser_name().equals(user_name)) {
-			// ÑéÖ¤³É¹¦£¬ÉèÖÃÕË»§ÎªÈ·ÈÏ×´Ì¬£¬µ÷ÓÃDao²ã±£´æ
+			// éªŒè¯æˆåŠŸï¼Œè®¾ç½®è´¦æˆ·ä¸ºç¡®è®¤çŠ¶æ€ï¼Œè°ƒç”¨Daoå±‚ä¿å­˜
 			if (!u.getConfirmed()) {
 				u.setConfirmed(true);
 				umd.modify(u);
 			}
 		} else
-			throw new LoginException("ÇëÏÈµÇÂ¼¡£");
-		// ÊÂÎñÌá½»
+			throw new LoginException("è¯·å…ˆç™»å½•ã€‚");
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}
 
-	// ¸öÈË»ù±¾ĞÅÏ¢ĞŞ¸Ä¹¦ÄÜ
+	// ä¸ªäººåŸºæœ¬ä¿¡æ¯ä¿®æ”¹åŠŸèƒ½
 	@Override
 	public void modfiyinfo(User user) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// Í¨¹ısession»ñµÃµ±Ç°user¶ÔÏñ
+		// é€šè¿‡sessionè·å¾—å½“å‰userå¯¹åƒ
 		User u = (User) ActionContext.getContext().getSession().get("currentuser");
 		User u2 = umd.get_by_nickname(user.getUser_nickname());
-		// ¼ì²éÒªĞŞ¸ÄµÄêÇ³ÆÊÇ·ñÒÑ´æÔÚ¡£ÊÇÔòÅ×³öÒì³£¡£
+		// æ£€æŸ¥è¦ä¿®æ”¹çš„æ˜µç§°æ˜¯å¦å·²å­˜åœ¨ã€‚æ˜¯åˆ™æŠ›å‡ºå¼‚å¸¸ã€‚
 		if (u2 != null && !u.getUser_name().equals(u2.getUser_name())) {
-			throw new ModifyInfoException("êÇ³ÆÒÑ´æÔÚ£¡");
+			throw new ModifyInfoException("æ˜µç§°å·²å­˜åœ¨ï¼");
 		} else if (user.getUser_nickname().equals("")) {
-			throw new ModifyInfoException("êÇ³Æ²»ÄÜÎª¿Õ£¡");
+			throw new ModifyInfoException("æ˜µç§°ä¸èƒ½ä¸ºç©ºï¼");
 		} else {
-			// ĞÅÏ¢ĞŞ¸Ä
+			// ä¿¡æ¯ä¿®æ”¹
 			u.setUser_nickname(user.getUser_nickname());
 			u.setUser_age(user.getUser_age());
 			u.setUser_gender(user.getUser_gender());
@@ -166,136 +166,136 @@ public class UserManageSeviceImpl implements UserManageService {
 			u.setUser_address(user.getUser_address());
 			u.setUser_hobby(user.getUser_hobby());
 		}
-		// Ìá½»µ½Dao²ã´¦Àí
+		// æäº¤åˆ°Daoå±‚å¤„ç†
 		session.clear();
 		umd.modify(u);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}
 
-	// ÃÜÂëĞŞ¸Ä¹¦ÄÜ
+	// å¯†ç ä¿®æ”¹åŠŸèƒ½
 	@Override
 	public void modifypw(User currentuser, User user) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// ¼ì²éÁ½´ÎÊäÈëµÄÃÜÂëÊÇ·ñÒ»ÖÂ
+		// æ£€æŸ¥ä¸¤æ¬¡è¾“å…¥çš„å¯†ç æ˜¯å¦ä¸€è‡´
 		if (!ic.checkpassword(user.getUser_password(), user.getUser_password2())) {
-			// ·ñ£¬Å×³öÒì³£
-			throw new ModifyPwException("Á½´ÎÃÜÂëÊäÈë²»Ò»ÖÂ");
+			// å¦ï¼ŒæŠ›å‡ºå¼‚å¸¸
+			throw new ModifyPwException("ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ä¸€è‡´");
 		} else {
-			// ÊÇ£¬ÉèÖÃ²ÎÊı£¬µ÷ÓÃDao±£´æĞŞ¸Ä
+			// æ˜¯ï¼Œè®¾ç½®å‚æ•°ï¼Œè°ƒç”¨Daoä¿å­˜ä¿®æ”¹
 			currentuser.setUser_password(user.getUser_password());
 			umd.modify(currentuser);
 		}
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}
 
-	// ÉèÖÃĞ­¹ÜÔ±¹¦ÄÜ
+	// è®¾ç½®åç®¡å‘˜åŠŸèƒ½
 	@Override
 	public void setmoderator(String user_nickname) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// µ÷ÓÃDao²ã£¬È¡µÃÒªÉèÖÃµÄÓÃ»§¶ÔÏó
+		// è°ƒç”¨Daoå±‚ï¼Œå–å¾—è¦è®¾ç½®çš„ç”¨æˆ·å¯¹è±¡
 		User user = umd.get_by_nickname(user_nickname);
-		// È¡µÃModerator½ÇÉ«¶ÔÏó
+		// å–å¾—Moderatorè§’è‰²å¯¹è±¡
 		Role moderator = rmd.getModerator();
-		// ²ÎÊıÉèÖÃ
+		// å‚æ•°è®¾ç½®
 		Role r_user = rmd.getUser();
 		r_user.getUsers().remove(user);
 		moderator.getUsers().add(user);
 		user.setRole(moderator);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}
 
-	// ÉèÖÃÆÕÍ¨ÓÃ»§¹¦ÄÜ
+	// è®¾ç½®æ™®é€šç”¨æˆ·åŠŸèƒ½
 	@Override
 	public void setuser(String user_nickname) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// µ÷ÓÃDao²ãÈ¡µÃÒªĞŞ¸ÄµÄÓÃ»§¶ÔÏó
+		// è°ƒç”¨Daoå±‚å–å¾—è¦ä¿®æ”¹çš„ç”¨æˆ·å¯¹è±¡
 		User user = umd.get_by_nickname(user_nickname);
-		// È¡µÃModerator¼°User½ÇÉ«¶ÔÏó
+		// å–å¾—ModeratoråŠUserè§’è‰²å¯¹è±¡
 		Role moderator = rmd.getModerator();
 		Role r_user = rmd.getUser();
-		// ²ÎÊıÉèÖÃ
+		// å‚æ•°è®¾ç½®
 		moderator.getUsers().remove(user);
 		r_user.getUsers().add(user);
 		user.setRole(r_user);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 
 	}
 
-	// ÖØÖÃÃÜÂë
+	// é‡ç½®å¯†ç 
 	@Override
 	public void resetpw(User user) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ¿ªÆô»á»°
+		// å¼€å¯ä¼šè¯
 		Transaction transaction = session.beginTransaction();
-		// Í¨¹ıÓÊÏä»ñÈ¡ÓÃ»§¶ÔÏó
+		// é€šè¿‡é‚®ç®±è·å–ç”¨æˆ·å¯¹è±¡
 		User u = umd.get_by_eamil(user.getUser_email());
-		// ¼ì²éÁ½´ÎÃÜÂëÊäÈëÊÇ·ñÒ»ÖÂ
+		// æ£€æŸ¥ä¸¤æ¬¡å¯†ç è¾“å…¥æ˜¯å¦ä¸€è‡´
 		if (ic.checkpassword(user.getUser_password(), user.getUser_password2())) {
-			// ÊÇ£¬Ìá½»ĞŞ¸Ä£¬·µ»ØÌáÊ¾ĞÅÏ¢
+			// æ˜¯ï¼Œæäº¤ä¿®æ”¹ï¼Œè¿”å›æç¤ºä¿¡æ¯
 			u.setUser_password(user.getUser_password());
-			ActionContext.getContext().put("message", "ÃÜÂëĞŞ¸Ä³É¹¦");
+			ActionContext.getContext().put("message", "å¯†ç ä¿®æ”¹æˆåŠŸ");
 		} else {
-			// ·ñ£¬·µ»ØÌáÊ¾ĞÅÏ¢£¬Å×³öÒì³£
+			// å¦ï¼Œè¿”å›æç¤ºä¿¡æ¯ï¼ŒæŠ›å‡ºå¼‚å¸¸
 			ServletActionContext.getRequest().setAttribute("resetpw", true);
-			throw new ModifyPwException("Á½´ÎÃÜÂëÊäÈë²»Ò»ÖÂ");
+			throw new ModifyPwException("ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ä¸€è‡´");
 		}
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 
 	}
 
-	// ÓÃ»§ÖØÖÃÃÜÂëÇ°µÄ²Ù×÷
+	// ç”¨æˆ·é‡ç½®å¯†ç å‰çš„æ“ä½œ
 	@Override
 	public void findpw(String email) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// Í¨¹ıÓÊÏä»ñÈ¡ÓÃ»§¶ÔÏó
+		// é€šè¿‡é‚®ç®±è·å–ç”¨æˆ·å¯¹è±¡
 		User u = umd.get_by_eamil(email);
-		// ÓÃ»§ÊÇ·ñ´æÔÚ
+		// ç”¨æˆ·æ˜¯å¦å­˜åœ¨
 		if (u != null) {
-			// ´æÔÚµ÷ÓÃMail¹¤¾ßÀà·¢ËÍÓÊ¼ş
+			// å­˜åœ¨è°ƒç”¨Mailå·¥å…·ç±»å‘é€é‚®ä»¶
 			u.getUser_nickname();
 			u.getUser_email();
 			new MailUtil().sendto(email, new ResetPwEmail(u));
-			ActionContext.getContext().put("message", "ÎÒÃÇÒÑ·¢ËÍÁËÈ·ÈÏÓÊ¼şµ½ÄãµÄÓÊÏä");
+			ActionContext.getContext().put("message", "æˆ‘ä»¬å·²å‘é€äº†ç¡®è®¤é‚®ä»¶åˆ°ä½ çš„é‚®ç®±");
 		} else {
-			// ²»´æÔÚ£¬Å×³öÒì³££¬¸ø³öÌáÊ¾ĞÅÏ¢
-			throw new LoginException("ÓÊÏäÎ´×¢²á");
+			// ä¸å­˜åœ¨ï¼ŒæŠ›å‡ºå¼‚å¸¸ï¼Œç»™å‡ºæç¤ºä¿¡æ¯
+			throw new LoginException("é‚®ç®±æœªæ³¨å†Œ");
 		}
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		/// ×ÊÔ´¹Ø±Õ
+		/// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}

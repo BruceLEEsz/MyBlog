@@ -4,15 +4,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * ½ÇÉ«±íÊµÌåÀà
+ * è§’è‰²è¡¨å®ä½“ç±»
  */
 
 public class Role {
-	// ½ÇÉ«±í»ù´¡ÊôĞÔ
+	// è§’è‰²è¡¨åŸºç¡€å±æ€§
 	private Long role_id;
 	private String role_name;
 	private Integer role_authority;
-	// ¹ØÏµÎ¬»¤ÊôĞÔ
+	// å…³ç³»ç»´æŠ¤å±æ€§
 	private Set<User> users = new HashSet<User>();
 
 	public Set<User> getUsers() {

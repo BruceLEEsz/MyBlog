@@ -3,7 +3,7 @@ package dao;
 import domain.Role;
 
 /**
- * 角色数据管理接口
+ * 瑙掕壊鏁版嵁绠＄悊鎺ュ彛
  */
 public interface RoleManageDao {
 

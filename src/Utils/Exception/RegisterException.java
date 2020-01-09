@@ -1,7 +1,7 @@
 package Utils.Exception;
 
 /**
- * ×¢²á¹ı³Ì´íÎóÀà
+ * æ³¨å†Œè¿‡ç¨‹é”™è¯¯ç±»
  */
 public class RegisterException extends RuntimeException {
 

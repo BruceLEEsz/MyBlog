@@ -10,35 +10,35 @@ import service.CommentManageService;
 import service.impl.CommentManageServiceImpl;
 
 /**
- * ÆÀÂÛ¹ÜÀíActionÀà£¬ÓÃÓÚ´¦ÀíÆÀÂÛÆÀÂÛÏà¹ØÇëÇó
+ * è¯„è®ºç®¡ç†Actionç±»ï¼Œç”¨äºå¤„ç†è¯„è®ºè¯„è®ºç›¸å…³è¯·æ±‚
  */
 public class CommentManageAction extends ActionSupport implements ModelDriven<Comment> {
 
 	private static final long serialVersionUID = 1L;
-	// ÆÀÂÛÊµÌå¶ÔÏó£¬ÓÃÓÚ½ÓÊÕÒ³Ãæ´«Èë²ÎÊı
+	// è¯„è®ºå®ä½“å¯¹è±¡ï¼Œç”¨äºæ¥æ”¶é¡µé¢ä¼ å…¥å‚æ•°
 	Comment comment = new Comment();
-	// ÆÀÂÛ¹ÜÀíservice¶ÔÏó
+	// è¯„è®ºç®¡ç†serviceå¯¹è±¡
 	private CommentManageService cms = new CommentManageServiceImpl();
 
 	private Long blog_id;
 
-	// ÆÀÂÛ·¢±í
+	// è¯„è®ºå‘è¡¨
 	public String post() {
-		// È¡µÃ²ÎÊı
+		// å–å¾—å‚æ•°
 		Long blog_id = new Long(ServletActionContext.getRequest().getParameter("blog_id"));
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		cms.post(comment, blog_id);
-		// ÉèÖÃ·µ»Ø²ÎÊı
+		// è®¾ç½®è¿”å›å‚æ•°
 		ServletActionContext.getRequest().setAttribute("page", 1);
 		this.blog_id = blog_id;
 		return "chainblog";
 	}
 
-	// ÆÀÂÛÉ¾³ı
+	// è¯„è®ºåˆ é™¤
 	public String delete() {
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		cms.delete(comment, blog_id);
-		// ÉèÖÃ·µ»Ø²ÎÊı
+		// è®¾ç½®è¿”å›å‚æ•°
 		ServletActionContext.getRequest().setAttribute("page", 1);
 		return "chainblog";
 	}

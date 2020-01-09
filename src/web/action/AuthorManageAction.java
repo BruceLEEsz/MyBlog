@@ -14,61 +14,61 @@ import service.UserManageService;
 import service.impl.UserManageSeviceImpl;
 
 /**
- * ÓÃ»§¹ÜÀíActionÀà£¬ÓÃÓÚ´¦ÀíÕË»§Ïà¹ØµÄÇëÇó
+ * ç”¨æˆ·ç®¡ç†Actionç±»ï¼Œç”¨äºå¤„ç†è´¦æˆ·ç›¸å…³çš„è¯·æ±‚
  */
 public class AuthorManageAction extends ActionSupport implements ModelDriven<User> {
 
 	private static final long serialVersionUID = 1L;
-	// ÓÃ»§¶ÔÏó£¬½ÓÊÕÒ³Ãæ´«ÈëµÄ²ÎÊı
+	// ç”¨æˆ·å¯¹è±¡ï¼Œæ¥æ”¶é¡µé¢ä¼ å…¥çš„å‚æ•°
 	private User user = new User();
-	// ÓÃ»§¹ÜÀíservice¶ÔÏó
+	// ç”¨æˆ·ç®¡ç†serviceå¯¹è±¡
 	private UserManageService ums = new UserManageSeviceImpl();
 
-	// ×¢²á·½·¨
+	// æ³¨å†Œæ–¹æ³•
 	public String register() {
-		// µ÷ÓÃservice²ãÊµÏÖ×¢²áÂß¼­
+		// è°ƒç”¨serviceå±‚å®ç°æ³¨å†Œé€»è¾‘
 		User u = ums.register(user);
-		// ×¢²á³É¹¦£¬·µ»ØÌáÊ¾ĞÅÏ¢
+		// æ³¨å†ŒæˆåŠŸï¼Œè¿”å›æç¤ºä¿¡æ¯
 		ActionContext.getContext().getSession().put("currentuser", u);
-		ActionContext.getContext().getContextMap().put("message", "×¢²á³É¹¦£¡ÎÒÃÇÒÑ·¢ËÍÒ»·âÈ·ÈÏÓÊ¼şµ½ÄúµÄ×¢²áÓÊÏä¡£");
+		ActionContext.getContext().getContextMap().put("message", "æ³¨å†ŒæˆåŠŸï¼æˆ‘ä»¬å·²å‘é€ä¸€å°ç¡®è®¤é‚®ä»¶åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ã€‚");
 		return "chainindex";
 
 	}
 
-	// µÇÂ¼·½·¨
+	// ç™»å½•æ–¹æ³•
 	public String login() {
-		// µ÷ÓÃservice²ãÊµÏÖµÇÂ¼¹¦ÄÜ
+		// è°ƒç”¨serviceå±‚å®ç°ç™»å½•åŠŸèƒ½
 		User u = ums.login(user);
-		// µÇÂ¼³É¹¦
+		// ç™»å½•æˆåŠŸ
 		ActionContext.getContext().getSession().put("currentuser", u);
-		// ¼ì²éÕË»§È·ÈÏÇé¿ö
+		// æ£€æŸ¥è´¦æˆ·ç¡®è®¤æƒ…å†µ
 		if (!u.getConfirmed()) {
-			// Î´È·ÈÏ£¬×ªµ½Ö÷Ò³£¬¸øÓèÌáÊ¾ĞÅÏ¢
+			// æœªç¡®è®¤ï¼Œè½¬åˆ°ä¸»é¡µï¼Œç»™äºˆæç¤ºä¿¡æ¯
 			new MailUtil().sendto(u.getUser_email(), new ConfirmEmail(u));
-			ActionContext.getContext().getContextMap().put("message", "ÕË»§Î´È·ÈÏ£¡ÎÒÃÇÒÑÖØĞÂ·¢ËÍÁËÒ»·âÈ·ÈÏÓÊ¼şµ½ÄúµÄ×¢²áÓÊÏä¡£");
+			ActionContext.getContext().getContextMap().put("message", "è´¦æˆ·æœªç¡®è®¤ï¼æˆ‘ä»¬å·²é‡æ–°å‘é€äº†ä¸€å°ç¡®è®¤é‚®ä»¶åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ã€‚");
 		}
 		return "chainindex";
 	}
 
-	// ×¢Ïú·½·¨
+	// æ³¨é”€æ–¹æ³•
 	public String logout() {
-		// Çå¿Õsession¶ÔÏó£¬×¢ÏúÕË»§
+		// æ¸…ç©ºsessionå¯¹è±¡ï¼Œæ³¨é”€è´¦æˆ·
 		ActionContext.getContext().getSession().clear();
 
 		return "login";
 
 	}
 
-	// ÕË»§ÑéÖ¤·½·¨
+	// è´¦æˆ·éªŒè¯æ–¹æ³•
 	public String confirm() {
-		// »ñÈ¡ÑéÖ¤²ÎÊı
+		// è·å–éªŒè¯å‚æ•°
 		String user_name = ServletActionContext.getRequest().getParameter("user_name");
 		Boolean modifypw = new Boolean(ServletActionContext.getRequest().getParameter("modifypw"));
-		// Í¨¹ısession¶ÔÏó»ñÈ¡µ±Ç°user¶ÔÏó
+		// é€šè¿‡sessionå¯¹è±¡è·å–å½“å‰userå¯¹è±¡
 		User u = (User) ActionContext.getContext().getSession().get("currentuser");
-		// µ÷ÓÃserviceÊµÏÖÕË»§ÑéÖ¤¹¦ÄÜ
+		// è°ƒç”¨serviceå®ç°è´¦æˆ·éªŒè¯åŠŸèƒ½
 		ums.confirm(u, user_name);
-		// ÑéÖ¤³É¹¦£¬·µ»Ø
+		// éªŒè¯æˆåŠŸï¼Œè¿”å›
 		if (!modifypw)
 			return "tosetinfo";
 		else
@@ -76,67 +76,67 @@ public class AuthorManageAction extends ActionSupport implements ModelDriven<Use
 
 	}
 
-	// ÕË»§¸öÈËĞÅÏ¢ĞŞ¸Ä·½·¨
+	// è´¦æˆ·ä¸ªäººä¿¡æ¯ä¿®æ”¹æ–¹æ³•
 	public String modifyinfo() {
-		// µ÷ÓÃserviceÊµÏÖĞÅÏ¢ĞŞ¸ÄÂß¼­
+		// è°ƒç”¨serviceå®ç°ä¿¡æ¯ä¿®æ”¹é€»è¾‘
 		ums.modfiyinfo(user);
 		return "chainindex";
 
 	}
 
-	// ÃÜÂëĞŞ¸Ä
+	// å¯†ç ä¿®æ”¹
 	public String modifypw() {
-		/// »ñÈ¡²ÎÊı
+		/// è·å–å‚æ•°
 		User u = (User) ActionContext.getContext().getSession().get("currentuser");
 		Boolean hadsendmail = new Boolean(ServletActionContext.getRequest().getParameter("hadsendmail"));
 		if (!hadsendmail) {
-			// È·ÈÏÓÊ¼şÎ´·¢ËÍ£¬·¢ËÍÓÊ¼ş
+			// ç¡®è®¤é‚®ä»¶æœªå‘é€ï¼Œå‘é€é‚®ä»¶
 			new MailUtil().sendto(u.getUser_email(), new ModifyPwEmail(u));
 		} else {
-			// ·ñÔò£¬µ÷ÓÃservice²ãĞŞ¸ÄÃÜÂë
+			// å¦åˆ™ï¼Œè°ƒç”¨serviceå±‚ä¿®æ”¹å¯†ç 
 			ums.modifypw(u, user);
 		}
 
 		return "chainindex";
 	}
 
-	// ÓÃ»§ÖØÖÃÃÜÂëÇ°µÄ²Ù×÷
+	// ç”¨æˆ·é‡ç½®å¯†ç å‰çš„æ“ä½œ
 	public String findpw() {
-		// È¡µÃ²ÎÊı
+		// å–å¾—å‚æ•°
 		String email = ServletActionContext.getRequest().getParameter("email");
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		ums.findpw(email);
 
 		return "tologin";
 	}
 
-	// ÖØÖÃÃÜÂë
+	// é‡ç½®å¯†ç 
 	public String resetpw() {
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		ums.resetpw(user);
 		return "tologin";
 	}
 
-	// ÉèÖÃĞ­¹ÜÔ±·½·¨
+	// è®¾ç½®åç®¡å‘˜æ–¹æ³•
 	public String setmoderator() {
-		// È¡µÃ²ÎÊı
+		// å–å¾—å‚æ•°
 		String user_nickname = ServletActionContext.getRequest().getParameter("user_nickname");
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		ums.setmoderator(user_nickname);
-		// ÉèÖÃ·µ»Ø²ÎÊı
+		// è®¾ç½®è¿”å›å‚æ•°
 		ServletActionContext.getRequest().setAttribute("user_nickname", user_nickname);
 		ServletActionContext.getRequest().setAttribute("page", 1);
 		return "chainmain";
 
 	}
 
-	// ÉèÖÃÆÕÍ¨ÓÃ»§·½·¨
+	// è®¾ç½®æ™®é€šç”¨æˆ·æ–¹æ³•
 	public String setuser() {
-		// È¡µÃ²ÎÊı
+		// å–å¾—å‚æ•°
 		String user_nickname = ServletActionContext.getRequest().getParameter("user_nickname");
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		ums.setuser(user_nickname);
-		// ÉèÖÃ·µ»Ø²ÎÊı
+		// è®¾ç½®è¿”å›å‚æ•°
 		ServletActionContext.getRequest().setAttribute("user_nickname", user_nickname);
 		ServletActionContext.getRequest().setAttribute("page", 1);
 		return "chainmain";

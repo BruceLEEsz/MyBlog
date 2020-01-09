@@ -1,7 +1,7 @@
 package Utils.Exception;
 
 /**
- * µÇÂ¼¹ý³Ì´íÎóÀà
+ * ç™»å½•è¿‡ç¨‹é”™è¯¯ç±»
  */
 public class LoginException extends RuntimeException {
 

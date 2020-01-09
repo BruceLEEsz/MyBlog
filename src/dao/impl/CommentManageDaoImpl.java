@@ -17,36 +17,36 @@ import domain.Comment;
 import domain.User;
 
 /**
- * ÆÀÂÛÊı¾İ¹ÜÀíÊµÏÖÀà
+ * è¯„è®ºæ•°æ®ç®¡ç†å®ç°ç±»
  */
 public class CommentManageDaoImpl implements CommentManageDao {
 
-	// ĞÂÔöÆÀÂÛ·½·¨
+	// æ–°å¢è¯„è®ºæ–¹æ³•
 	@Override
 	public void add(Comment comment, Long blog_id) {
 
-		// »ñÈ¡blogÊı¾İ¹ÜÀí¶ÔÏó
+		// è·å–blogæ•°æ®ç®¡ç†å¯¹è±¡
 		BlogManageDao bmd = new BlogManageDaoImpl();
-		// »ñÈ¡µ±Ç°user¶ÔÏó
+		// è·å–å½“å‰userå¯¹è±¡
 		User currentuser = (User) ActionContext.getContext().getSession().get("currentuser");
-		// »ñÈ¡µ±Ç°blog¶ÔÏó
+		// è·å–å½“å‰blogå¯¹è±¡
 		Blog blog = bmd.get_by_id(blog_id);
-		// ÉèÖÃÆÀÂÛÓëÓÃ»§ºÍ²©¿Í¹ØÁª
+		// è®¾ç½®è¯„è®ºä¸ç”¨æˆ·å’Œåšå®¢å…³è”
 		blog.getComments().add(comment);
 		comment.setBlog(blog);
 		comment.setUser(currentuser);
 	}
 
-	// ÆÀÂÛÉ¾³ı·½·¨
+	// è¯„è®ºåˆ é™¤æ–¹æ³•
 	@Override
 	public void del(Comment comment, Long blog_id) {
-		// ĞÂ½¨²©¿ÍÊı¾İ¹ÜÀíÀà¶ÔÏó
+		// æ–°å»ºåšå®¢æ•°æ®ç®¡ç†ç±»å¯¹è±¡
 		BlogManageDao bmd = new BlogManageDaoImpl();
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// »ñÈ¡µ±Ç°²©¿Í¶ÔÏó
+		// è·å–å½“å‰åšå®¢å¯¹è±¡
 		Blog blog = bmd.get_by_id(blog_id);
-		// É¾³ı¹ØÏµ
+		// åˆ é™¤å…³ç³»
 		Iterator<Comment> it = blog.getComments().iterator();
 		while (it.hasNext()) {
 			Comment c = it.next();
@@ -58,75 +58,75 @@ public class CommentManageDaoImpl implements CommentManageDao {
 		Comment c = get_by_comment_id(comment.getComment_id());
 		c.setBlog(null);
 		c.setUser(null);
-		// É¾³ıÆÀÂÛ
+		// åˆ é™¤è¯„è®º
 		session.delete(c);
 
 	}
 
-	// ²éÑ¯Ö¸¶¨blog_id²©¿ÍÏÂµÄÆÀÂÛ
+	// æŸ¥è¯¢æŒ‡å®šblog_idåšå®¢ä¸‹çš„è¯„è®º
 	@Override
 	public Set<Comment> get_by_blog_id(Long blog_id) {
 
-		// »ñÈ¡blogÊı¾İ¹ÜÀí¶ÔÏó
+		// è·å–blogæ•°æ®ç®¡ç†å¯¹è±¡
 		BlogManageDao bmd = new BlogManageDaoImpl();
-		// »ñÈ¡blog¶ÔÏó
+		// è·å–blogå¯¹è±¡
 		Blog blog = bmd.get_by_id(blog_id);
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// »ñÈ¡ÆÀÂÛ¼¯
+		// è·å–è¯„è®ºé›†
 		session.saveOrUpdate(blog);
 		Set<Comment> comments = blog.getComments();
 
 		return comments;
 	}
 
-	// ²éÑ¯Ö¸¶¨comment_idµÄÆÀÂÛ
+	// æŸ¥è¯¢æŒ‡å®šcomment_idçš„è¯„è®º
 	@Override
 	public Comment get_by_comment_id(Long comment_id) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// hqlÓï¾ä
+		// hqlè¯­å¥
 		String hql = "from domain.Comment where comment_id = ?";
-		// ĞÂ½¨²éÑ¯¶ÔÏó
+		// æ–°å»ºæŸ¥è¯¢å¯¹è±¡
 		Query query = session.createQuery(hql);
-		// ÉèÖÃ²ÎÊı
+		// è®¾ç½®å‚æ•°
 		query.setParameter(0, comment_id);
-		// »ñÈ¡²éÑ¯½á¹û
+		// è·å–æŸ¥è¯¢ç»“æœ
 		Comment c = (Comment) query.uniqueResult();
 		return c;
 	}
 
-	// ²éÑ¯Ö¸¶¨blog_idÏÂµÄÆÀÂÛÊı¾İ×ÜÌõÊı
+	// æŸ¥è¯¢æŒ‡å®šblog_idä¸‹çš„è¯„è®ºæ•°æ®æ€»æ¡æ•°
 	@Override
 	public int getAllRowCount(Long blog_id) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// hqlÓï¾ä
+		// hqlè¯­å¥
 		String hql = "from domain.Comment where blog_id = ?";
-		// ĞÂ½¨²éÑ¯¶ÔÏó
+		// æ–°å»ºæŸ¥è¯¢å¯¹è±¡
 		Query query = session.createQuery(hql);
-		// ²ÎÊıÉèÖÃ
+		// å‚æ•°è®¾ç½®
 		query.setParameter(0, blog_id);
-		// »ñÈ¡²éÑ¯½á¹û
+		// è·å–æŸ¥è¯¢ç»“æœ
 		int allrowcount = query.list().size();
 		return allrowcount;
 	}
 
-	// ·ÖÒ³²éÑ¯Ö¸¶¨blog_idÏÂµÄÆÀÂÛ
+	// åˆ†é¡µæŸ¥è¯¢æŒ‡å®šblog_idä¸‹çš„è¯„è®º
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> get_by_page(Long blog_id, int offset, int pageSize) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// hqlÓï¾ä
+		// hqlè¯­å¥
 		String hql = "from domain.Comment where blog_id = ?";
-		// ĞÂ½¨²éÑ¯¶ÔÏó
+		// æ–°å»ºæŸ¥è¯¢å¯¹è±¡
 		Query query = session.createQuery(hql);
-		// ÉèÖÃ²ÎÊı
+		// è®¾ç½®å‚æ•°
 		query.setParameter(0, blog_id);
 		query.setFirstResult(offset);
 		query.setMaxResults(pageSize);
-		// »ñÈ¡²éÑ¯½á¹û
+		// è·å–æŸ¥è¯¢ç»“æœ
 		List<Comment> comments = query.list();
 		return comments;
 

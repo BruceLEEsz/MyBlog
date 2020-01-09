@@ -3,7 +3,7 @@ package service;
 import domain.User;
 
 /**
- * 用户管理业务逻辑接口
+ * 鐢ㄦ埛绠＄悊涓氬姟閫昏緫鎺ュ彛
  */
 public interface UserManageService {
 

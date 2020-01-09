@@ -1,7 +1,7 @@
 package service;
 
 /**
- * 流程控制业务逻辑接口
+ * 娴佺▼鎺у埗涓氬姟閫昏緫鎺ュ彛
  */
 public interface ProcessManageService {
 

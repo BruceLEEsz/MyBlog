@@ -1,7 +1,7 @@
 package Utils.Exception;
 
 /**
- * ĞÅÏ¢ĞŞ¸Ä¹ı³Ì´íÎóÀà
+ * ä¿¡æ¯ä¿®æ”¹è¿‡ç¨‹é”™è¯¯ç±»
  */
 public class ModifyInfoException extends RuntimeException {
 

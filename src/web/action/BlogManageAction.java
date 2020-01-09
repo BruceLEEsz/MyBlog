@@ -10,56 +10,56 @@ import service.BlogManageService;
 import service.impl.BlogManageServiceImpl;
 
 /**
- * ²©¿Í¹ÜÀíActionÀà£¬ÓÃÓÚ´¦Àí²©¿ÍÏà¹ØÇëÇó
+ * åšå®¢ç®¡ç†Actionç±»ï¼Œç”¨äºå¤„ç†åšå®¢ç›¸å…³è¯·æ±‚
  */
 public class BlogManageAction extends ActionSupport implements ModelDriven<Blog> {
 
 	private static final long serialVersionUID = 1L;
-	// ²©¿ÍÊµÌå¶ÔÏó£¬½ÓÊÕÒ³ÃæÌá½»²ÎÊı
+	// åšå®¢å®ä½“å¯¹è±¡ï¼Œæ¥æ”¶é¡µé¢æäº¤å‚æ•°
 	Blog blog = new Blog();
-	// ²©¿Í¹ÜÀíservice¶ÔÏó
+	// åšå®¢ç®¡ç†serviceå¯¹è±¡
 	private BlogManageService bms = new BlogManageServiceImpl();
 
 	private Long blog_id;
 
-	// ·¢±íĞÂ²©¿Í
+	// å‘è¡¨æ–°åšå®¢
 	public String post() {
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		bms.post(blog);
 		return "chainindex";
 
 	}
 
-	// ²©¿ÍĞŞ¸Ä
+	// åšå®¢ä¿®æ”¹
 	public String modify() {
-		// È¡µÃ²ÎÊı
+		// å–å¾—å‚æ•°
 		Long blog_id = (Long) ServletActionContext.getRequest().getAttribute("blog_id");
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		bms.modify(blog, blog_id);
-		// ÉèÖÃ·µ»Ø²ÎÊı
+		// è®¾ç½®è¿”å›å‚æ•°
 		this.blog_id = blog_id;
 		ServletActionContext.getRequest().setAttribute("page", 1);
 		return "chainblog";
 
 	}
 
-	// ²©¿ÍÉ¾³ı
+	// åšå®¢åˆ é™¤
 	public String delete() {
-		// È¡µÃ²ÎÊı£¬µ÷ÓÃservice²ã
+		// å–å¾—å‚æ•°ï¼Œè°ƒç”¨serviceå±‚
 		String user_nickname = bms.delete(new Long(ServletActionContext.getRequest().getParameter("blog_id")));
-		// ÉèÖÃ·µ»Ø²ÎÊı
+		// è®¾ç½®è¿”å›å‚æ•°
 		ServletActionContext.getRequest().setAttribute("user_nickname", user_nickname);
 		ServletActionContext.getRequest().setAttribute("page", 1);
 		return "chainmain";
 
 	}
 
-	// ²©¿Í²éÑ¯
+	// åšå®¢æŸ¥è¯¢
 	public String query() {
-		// È¡µÃ²ÎÊı£¬µ÷ÓÃservice²ã
+		// å–å¾—å‚æ•°ï¼Œè°ƒç”¨serviceå±‚
 		Boolean modify = new Boolean(ServletActionContext.getRequest().getParameter("modify"));
 		bms.qurey_by_id(new Long(ServletActionContext.getRequest().getParameter("blog_id")));
-		// ¸ù¾İÊÇ¡°ÏÔÊ¾¡±»¹ÊÇ¡°ĞŞ¸Ä¡±·µ»Ø²»Í¬µÄ×Ö·û¼¯
+		// æ ¹æ®æ˜¯â€œæ˜¾ç¤ºâ€è¿˜æ˜¯â€œä¿®æ”¹â€è¿”å›ä¸åŒçš„å­—ç¬¦é›†
 		if (modify == null || !modify) {
 			return "toblog";
 		} else {

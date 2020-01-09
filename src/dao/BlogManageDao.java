@@ -6,7 +6,7 @@ import domain.Blog;
 
 
 /**
- * 博客数据管理接口
+ * 鍗氬鏁版嵁绠＄悊鎺ュ彛
  */
 public interface BlogManageDao {
 

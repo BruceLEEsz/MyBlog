@@ -8,48 +8,49 @@ import dao.RoleManageDao;
 import domain.Role;
 
 /**
- * ½ÇÉ«Êı¾İ¹ÜÀíÊµÏÖÀà
+ * è§’è‰²æ•°æ®ç®¡ç†å®ç°ç±»
  */
 public class RoleManageDaoImpl implements RoleManageDao {
 
-	// ·µ»ØÓÃ»§½ÇÉ«¶ÔÏó
+	// è¿”å›ç”¨æˆ·è§’è‰²å¯¹è±¡
 	@Override
 	public Role getUser() {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// hql¶ÔÏó
+		// hqlå¯¹è±¡
 		String hql = "from domain.Role where role_name = ?";
-		// ĞÂ½¨²éÑ¯¶ÔÏó
+		// æ–°å»ºæŸ¥è¯¢å¯¹è±¡
 		Query query = session.createQuery(hql);
-		// ÉèÖÃ²ÎÊı
+		// è®¾ç½®å‚æ•°
 		query.setParameter(0, "user");
-		// »ñÈ¡²åĞğ½á¹û
+		// è·å–æ’å™ç»“æœ
 		Role r_user = (Role) query.uniqueResult();
 		return r_user;
 	}
 
-	// ĞÂÔö½ÇÉ«
+	// æ–°å¢è§’è‰²
 	@Override
 	public void add_user(Role role) {
 		Session session = HibernateSessionFactory.getSession();
 		session.saveOrUpdate(role);
 	}
 
-	// ·µ»ØModerator½ÇÉ«¶ÔÏó
+	// è¿”å›Moderatorè§’è‰²å¯¹è±¡
 	@Override
 	public Role getModerator() {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// hql¶ÔÏó
+		// hqlå¯¹è±¡
 		String hql = "from domain.Role where role_name = ?";
-		// ĞÂ½¨²éÑ¯¶ÔÏó
+		// æ–°å»ºæŸ¥è¯¢å¯¹è±¡
 		Query query = session.createQuery(hql);
-		// ²ÎÊıÉèÖÃ
+		// å‚æ•°è®¾ç½®
 		query.setParameter(0, "moderator");
-		// »ñÈ¡²éÑ¯½á¹û
+		// è·å–æŸ¥è¯¢ç»“æœ
 		Role moderator = (Role) query.uniqueResult();
 		return moderator;
 
 	}
 
 }
+

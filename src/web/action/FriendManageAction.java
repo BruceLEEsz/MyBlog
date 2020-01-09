@@ -8,33 +8,33 @@ import service.FriendManageService;
 import service.impl.FriendManageServiceImpl;
 
 /**
- * ºÃÓÑ¹ÜÀíActionÀà£¬ÓÃÓÚ´¦ÀíÓëºÃÓÑ¹ÜÀíÓĞ¹ØµÄÇëÇó
+ * å¥½å‹ç®¡ç†Actionç±»ï¼Œç”¨äºå¤„ç†ä¸å¥½å‹ç®¡ç†æœ‰å…³çš„è¯·æ±‚
  */
 public class FriendManageAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
-	// ºÃÓÑ¹ÜÀíservice¶ÔÏó
+	// å¥½å‹ç®¡ç†serviceå¯¹è±¡
 	private FriendManageService fms = new FriendManageServiceImpl();
 
-	// ĞÂÔöºÃÓÑ
+	// æ–°å¢å¥½å‹
 	public String add() {
-		// È¡µÃ²ÎÊı
+		// å–å¾—å‚æ•°
 		String user_nickname = ServletActionContext.getRequest().getParameter("user_nickname");
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		fms.add(user_nickname);
-		// ÉèÖÃ·µ»Ø²ÎÊı
+		// è®¾ç½®è¿”å›å‚æ•°
 		ServletActionContext.getRequest().setAttribute("user_nickname", user_nickname);
 		ServletActionContext.getRequest().setAttribute("page", 1);
 		return "chainmain";
 	}
 
-	// É¾³ıºÃÓÑ
+	// åˆ é™¤å¥½å‹
 	public String delete() {
-		// È¡µÃ²ÎÊı
+		// å–å¾—å‚æ•°
 		String user_nickname = ServletActionContext.getRequest().getParameter("user_nickname");
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		fms.delete(user_nickname);
-		// ÉèÖÃ·µ»Ø²ÎÊı
+		// è®¾ç½®è¿”å›å‚æ•°
 		ServletActionContext.getRequest().setAttribute("user_nickname", user_nickname);
 		ServletActionContext.getRequest().setAttribute("page", 1);
 		return "chainmain";

@@ -12,7 +12,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
  * thread of execution. Follows the Thread Local Session pattern, see
  * {@link http://hibernate.org/42.html }.
  * 
- * 返回与线程绑定的session对象
+ * 杩斿洖涓庣嚎绋嬬粦瀹氱殑session瀵硅薄
  */
 public class HibernateSessionFactory {
 

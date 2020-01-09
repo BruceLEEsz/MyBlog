@@ -12,46 +12,46 @@ import domain.User;
 import service.FriendManageService;
 
 /**
- * ºÃÓÑ¹ÜÀíÒµÎñÂß¼­ÊµÏÖÀà
+ * å¥½å‹ç®¡ç†ä¸šåŠ¡é€»è¾‘å®ç°ç±»
  */
 public class FriendManageServiceImpl implements FriendManageService {
-	// ºÃÓÑÊı¾İ¹ÜÀíÀà¶ÔÏó
+	// å¥½å‹æ•°æ®ç®¡ç†ç±»å¯¹è±¡
 	private FriendManageDao fmd = new FriendManageDaoImpl();
-	// ÓÃ»§Êı¾İ¹ÜÀíÀà¶ÔÏó
+	// ç”¨æˆ·æ•°æ®ç®¡ç†ç±»å¯¹è±¡
 	private UserManageDao umd = new UserManageDaoImpl();
 
-	// ĞÂÔöºÃÓÑ·½·¨
+	// æ–°å¢å¥½å‹æ–¹æ³•
 	@Override
 	public void add(String user_nickname) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// È¡µÃÒªÔö¼ÓÎªºÃÓÑµÄÓÃ»§
+		// å–å¾—è¦å¢åŠ ä¸ºå¥½å‹çš„ç”¨æˆ·
 		User user = umd.get_by_nickname(user_nickname);
-		// µ÷ÓÃDao²ã
+		// è°ƒç”¨Daoå±‚
 		fmd.add(user);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}
 
-	// É¾³ıºÃÓÑ·½·¨
+	// åˆ é™¤å¥½å‹æ–¹æ³•
 	@Override
 	public void delete(String user_nickname) {
-		// »ñÈ¡session¶ÔÏó
+		// è·å–sessionå¯¹è±¡
 		Session session = HibernateSessionFactory.getSession();
-		// ÊÂÎñ¿ªÆô
+		// äº‹åŠ¡å¼€å¯
 		Transaction transaction = session.beginTransaction();
-		// È¡µÃÒªÉ¾³ıµÄÓÃ»§¶ÔÏó
+		// å–å¾—è¦åˆ é™¤çš„ç”¨æˆ·å¯¹è±¡
 		User user = umd.get_by_nickname(user_nickname);
-		// µ÷ÓÃDao²ã
+		// è°ƒç”¨Daoå±‚
 		fmd.delete(user);
-		// ÊÂÎñÌá½»
+		// äº‹åŠ¡æäº¤
 		transaction.commit();
-		// ×ÊÔ´¹Ø±Õ
+		// èµ„æºå…³é—­
 		session.clear();
 		session.close();
 	}

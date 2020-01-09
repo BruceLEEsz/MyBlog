@@ -3,7 +3,7 @@ package dao;
 import domain.User;
 
 /**
- * 用户数据管理接口
+ * 鐢ㄦ埛鏁版嵁绠＄悊鎺ュ彛
  */
 public interface UserManageDao {
 

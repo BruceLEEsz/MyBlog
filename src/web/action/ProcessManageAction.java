@@ -8,45 +8,45 @@ import service.ProcessManageService;
 import service.impl.ProcessManageServiceImpl;
 
 /**
- * Á÷³Ì¿ØÖÆActionÀà£¬ÓÃÓÚ·µ»Ø½øÈëÖ÷ÒªÒ³ÃæÊ±ĞèÒªÏÔÊ¾µÄ¶ÔÏó¡£
+ * æµç¨‹æ§åˆ¶Actionç±»ï¼Œç”¨äºè¿”å›è¿›å…¥ä¸»è¦é¡µé¢æ—¶éœ€è¦æ˜¾ç¤ºçš„å¯¹è±¡ã€‚
  */
 public class ProcessManageAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
-	// Á÷³Ì¿ØÖÆÒµÎñÂß¼­Àà¶ÔÏó
+	// æµç¨‹æ§åˆ¶ä¸šåŠ¡é€»è¾‘ç±»å¯¹è±¡
 	private ProcessManageService pms = new ProcessManageServiceImpl();
 
-	// ÏÔÊ¾²©¿ÍÕ¹Ê¾Ò³Ãæ
+	// æ˜¾ç¤ºåšå®¢å±•ç¤ºé¡µé¢
 	public String blog() {
-		// ²ÎÊı»ñÈ¡
+		// å‚æ•°è·å–
 		String page1 = ServletActionContext.getRequest().getParameter("page");
 		Integer page2 = (Integer) ServletActionContext.getRequest().getAttribute("page");
 		Integer page = (page1 != null ? new Integer(page1) : page2);
 		Long blog_id = new Long(ServletActionContext.getRequest().getParameter("blog_id"));
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		pms.showblog(blog_id, page);
 		return "toblog";
 
 	}
 
-	// ÏÔÊ¾¸öÈËĞÅÏ¢Ò³Ãæ
+	// æ˜¾ç¤ºä¸ªäººä¿¡æ¯é¡µé¢
 	public String main() {
-		// ²ÎÊı»ñÈ¡
+		// å‚æ•°è·å–
 		String u_nickname1 = (String) ServletActionContext.getRequest().getAttribute("user_nickname");
 		String u_nickname2 = ServletActionContext.getRequest().getParameter("user_nickname");
 		String user_nickname = (u_nickname1 != null ? u_nickname1 : u_nickname2);
 		String page1 = ServletActionContext.getRequest().getParameter("page");
 		Integer page2 = (Integer) ServletActionContext.getRequest().getAttribute("page");
 		Integer page = (page1 != null ? new Integer(page1) : page2);
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		pms.showmain(user_nickname, page);
 		return "tomain";
 
 	}
 
-	// ÏÔÊ¾Ö÷Ò³Ãæ
+	// æ˜¾ç¤ºä¸»é¡µé¢
 	public String index() {
-		// µ÷ÓÃservice²ã
+		// è°ƒç”¨serviceå±‚
 		pms.showindex();
 
 		return "toindex";
